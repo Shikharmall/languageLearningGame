@@ -185,8 +185,8 @@ const LeaderboardTable = (
             </div>
           ) : (
             <>
-              <div className="flex flex-wrap items-center justify-between py-4 px-4 bg-white dark:bg-gray-800 rounded-tl-lg rounded-tr-lg">
-                <div className="relative p-2">
+              <div className="flex flex-wrap items-center justify-end py-4 px-4 bg-white dark:bg-gray-800 rounded-tl-lg rounded-tr-lg">
+                {/*<div className="relative p-2">
                   <button
                     id="dropdownActionButton"
                     data-dropdown-toggle="dropdownAction"
@@ -198,7 +198,7 @@ const LeaderboardTable = (
                   >
                     Add Society +
                   </button>
-                </div>
+                </div>*/}
 
                 <div className="relative p-2 box-border">
                   <label htmlFor="table-search" className="sr-only">
