@@ -27,7 +27,7 @@ const Admin = () => {
 
   useEffect(() => {
     const getUserDetailsFunc = (user_id) => {
-      //setLoader(true);
+      setLoader(true);
       getUserDetailsAPI(user_id).then((res) => {
         if (res.status === 200) {
           setLoader(false);
@@ -54,9 +54,13 @@ const Admin = () => {
           {/*  Site header */}
           <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-          {/*<Navigation />*/} 
-
-          {data?.isAdmin ? <QuestionForm /> : <NoAccess />}
+          {loader ? (
+            <div className="flex justify-center items-center w-full h-full overflow-hidden">
+              <img src={Loaderimage} alt="loader" className="w-20 h-20" />
+            </div>
+          ) : (
+            <>{data?.isAdmin ? <QuestionForm /> : <NoAccess />}</>
+          )}
         </div>
       </div>
     </>

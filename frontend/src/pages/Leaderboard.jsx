@@ -4,18 +4,6 @@ import Loaderimage from "../images/loader.gif";
 
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
-
-import DashboardCard1 from "../partials/dashboard/DashboardCard1";
-import DashboardCard2 from "../partials/dashboard/DashboardCard2";
-import DashboardCard3 from "../partials/dashboard/DashboardCard3";
-import DashboardCard4 from "../partials/dashboard/DashboardCard4";
-import DashboardCard04 from "../partials/dashboard/DashboardCard04";
-import DashboardCard06 from "../partials/dashboard/DashboardCard06";
-import DashboardCard07 from "../partials/dashboard/DashboardCard07";
-
-import Footer from "../partials/Footer";
-import { getData } from "../Api/DataAPI";
-import { toast } from "react-toastify";
 import LeaderboardTable from "../components/LeaderboardTable";
 
 function Dashboard() {
@@ -30,23 +18,6 @@ function Dashboard() {
   }, []);
 
   const [loader, setLoader] = useState(false);
-  const [data, setData] = useState([]);
-
-  /*useEffect(() => {
-    const getanalytics = () => {
-      setLoader(true);
-      getData().then((res) => {
-        if (res.status === 200) {
-          setData(res.data);
-          setLoader(false);
-        } else {
-          toast("Data Fetching Failed!");
-        }
-      });
-    };
-
-    getanalytics();
-  }, []);*/
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -67,23 +38,7 @@ function Dashboard() {
             </div>
           ) : (
             <>
-              {/*<main>
-                <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-                  <div className="grid grid-cols-12 gap-6">
-                    <DashboardCard1 data1={data} />
-                    <DashboardCard2 data1={data} />
-                    <DashboardCard3 data1={data} />
-                    <DashboardCard4 data1={data} />
-                    <DashboardCard04 data1={data} />
-                    <DashboardCard06 data1={data} />
-          <DashboardCard07 data1={data} />
-                  </div>
-                </div>
-        </main>*/}
-
               <LeaderboardTable />
-
-              <Footer />
             </>
           )}
         </div>

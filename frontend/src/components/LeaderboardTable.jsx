@@ -8,19 +8,21 @@ import { NavLink } from "react-router-dom";
 import { API_URL_BASE } from "../utils/apiURL";
 import { getAllUsersDetailsAPI } from "../Api/UserAPI/UserAPI";
 
-const LeaderboardTable = ({
-  //societydata,
-  postsPerPage,
-  totalPosts,
-  paginate,
-  currentPage,
-  data1,
-  data2,
-  Loader,
-  indexOfFirstPost,
-  indexOfLastPost,
-  rowperpage,
-}) => {
+const LeaderboardTable = (
+  {
+    //societydata,
+    //postsPerPage,
+    //totalPosts,
+    //paginate,
+    //currentPage,
+    //data1,
+    //data2,
+    //Loader,
+    //indexOfFirstPost,
+    //indexOfLastPost,
+    //rowperpage,
+  }
+) => {
   const pageNumbers = [];
 
   const [societydata, setSocietyData] = useState([]);
@@ -34,7 +36,7 @@ const LeaderboardTable = ({
       //setLoader(true);
       getAllUsersDetailsAPI().then((res) => {
         if (res.status === 200) {
-          //setLoader(false);
+          setLoader(false);
           setUserData(res?.data?.data);
         } else {
           console.log("Data Fetching Failed!");
@@ -43,6 +45,22 @@ const LeaderboardTable = ({
     };
     getAllUsersDetailsFunc();
   }, []);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(10);
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  /*const filterhoadata = (e) => {
+    setSearch(e.target.value);
+    paginate(1);
+  };
+
+  const handleSelectChangerow = (e) => {
+    setPostsPerPage(e.target.value);
+  };*/
+  const totalPosts = userData.length;
 
   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
     pageNumbers.push(i);
@@ -202,7 +220,7 @@ const LeaderboardTable = ({
             </div>
           </div>
 
-          {Loader ? (
+          {loader ? (
             <div className="w-full h-full">
               <div className="flex justify-center p-30 pb-10 bg-white dark:bg-gray-800">
                 <img src={Loaderimage} alt="loader" className="w-20 h-20" />
@@ -220,6 +238,7 @@ const LeaderboardTable = ({
                             id="checkbox-all-search"
                             type="checkbox"
                             className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                            disabled
                           />
                           <label
                             htmlFor="checkbox-all-search"
@@ -257,6 +276,7 @@ const LeaderboardTable = ({
                                   id="checkbox-table-search-1"
                                   type="checkbox"
                                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                  disabled
                                 />
                                 <label
                                   htmlFor="checkbox-table-search-1"
@@ -280,7 +300,7 @@ const LeaderboardTable = ({
                                 {index === 0 ? (
                                   <svg
                                     className="w-8 h-8 absolute left-1"
-                                    style={{top: -25}}
+                                    style={{ top: -25 }}
                                     version="1.1"
                                     id="Layer_1"
                                     xmlns="http://www.w3.org/2000/svg"
@@ -326,7 +346,7 @@ const LeaderboardTable = ({
                             <td className="px-6 py-4">
                               <NavLink
                                 to={{
-                                  pathname: `/society/societydetails/${item._id}`,
+                                  pathname: `/publicUserdetails/${item._id}`,
                                 }}
                                 className="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer"
                               >

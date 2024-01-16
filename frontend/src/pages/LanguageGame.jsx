@@ -5,7 +5,6 @@ import img1 from "../images/city.png";
 import Loaderimage from "../images/loader.gif";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { getData } from "../Api/DataAPI";
 import Modalpopup from "../components/Modalpopup";
 
 const LanguageGame = () => {
@@ -37,58 +36,7 @@ const LanguageGame = () => {
   const handleSelectChangerow = (e) => {
     setPostsPerPage(e.target.value);
   };
-
-  const [Loader, setLoader] = useState(false);
-  const [data1, setData1] = useState([]);
-  const [data, setData] = useState([]);
-  const [endYearFilter, setEndYearFilter] = useState("");
-  const [selectedIndustry, setSelectedIndustry] = useState("");
-
-  const years = [];
-  for (let i = 2040; i >= 2000; i--) {
-    years.push(i.toString());
-  }
-
-  const applyFilters = (value) => {
-    console.log(value);
-    setEndYearFilter(value);
-
-    let updatedFilteredItems = [...data1];
-
-    if (value !== "") {
-      updatedFilteredItems = updatedFilteredItems.filter(
-        (item) => String(item.end_year) === value
-      );
-    }
-
-    if (selectedIndustry !== "") {
-      updatedFilteredItems = updatedFilteredItems.filter(
-        (item) => item.industry === selectedIndustry
-      );
-    }
-
-    setData(updatedFilteredItems);
-  };
-
-  console.log(data);
-
-  useEffect(() => {
-    const getanalytics = () => {
-      setLoader(true);
-      getData().then((res) => {
-        if (res.status === 200) {
-          setData1(res.data);
-          setData(res.data);
-          setLoader(false);
-        } else {
-          toast("Data Fetching Failed!");
-        }
-      });
-    };
-
-    getanalytics();
-  }, []);
-
+  
   return (
     <>
       <div className="flex h-screen overflow-hidden">

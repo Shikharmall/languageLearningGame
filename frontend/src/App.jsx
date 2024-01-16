@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Leaderboard from "./pages/Leaderboard";
 import UserDetails from "./pages/UserDetails";
+import PublicUserDetails from "./pages/PublicUserDetails";
 import LanguageGame from "./pages/LanguageGame";
 import NotFound from "./components/NotFound";
 import Admin from "./pages/Admin";
@@ -29,6 +30,11 @@ function App() {
       <Route exact path="/register" element={<Register />} />
       <Route exact path="/leaderboard" element={<Leaderboard />} />
       <Route exact path="/userdetails" element={<UserDetails />} />
+      <Route
+        exact
+        path="/publicUserdetails/:user_id"
+        element={<PublicUserDetails />}
+      />
       <Route exact path="/languagegame" element={<LanguageGame />} />
       <Route exact path="/admin" element={<Admin />} />
       <Route path="*" element={<NotFound />} />
