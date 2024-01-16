@@ -284,30 +284,30 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                       <path
                         d="M15 19H9V12.5V8.6C9 8.26863 9.26863 8 9.6 8H14.4C14.7314 8 15 8.26863 15 8.6V14.5V19Z"
                         stroke="currentColor"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                       <path
                         d="M15 5H9"
                         stroke="currentColor"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                       <path
                         d="M20.4 19H15V15.1C15 14.7686 15.2686 14.5 15.6 14.5H20.4C20.7314 14.5 21 14.7686 21 15.1V18.4C21 18.7314 20.7314 19 20.4 19Z"
                         stroke="currentColor"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                       <path
                         d="M9 19V13.1C9 12.7686 8.73137 12.5 8.4 12.5H3.6C3.26863 12.5 3 12.7686 3 13.1V18.4C3 18.7314 3.26863 19 3.6 19H9Z"
                         stroke="currentColor"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                     </svg>
                     <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
@@ -576,7 +576,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                     >
                       <path
                         fill="#FFFFFF"
-                        fill-rule="evenodd"
+                        fillRule="evenodd"
                         d="M11.3248,7.22461 C11.7513,6.58854 12,5.82332 12,5 C12,2.79086 10.2091,1 8,1 C5.79086,1 4,2.79086 4,5 C4,5.82332 4.24874,6.58854 4.67518,7.22461 C3.11714,7.77132 2,9.2552 2,11 L2,15 L14,15 L14,11 C14,9.2552 12.8829,7.77132 11.3248,7.22461 Z M10,5 C10,6.10457 9.10457,7 8,7 C6.89543,7 6,6.10457 6,5 C6,3.89543 6.89543,3 8,3 C9.10457,3 10,3.89543 10,5 Z M6,9 C4.89543,9 4,9.89543 4,11 L4,13 L12,13 L12,11 C12,9.89543 11.1046,9 10,9 L6,9 Z"
                       />
                     </svg>

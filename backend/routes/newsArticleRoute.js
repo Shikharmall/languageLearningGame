@@ -5,6 +5,7 @@ const auth = require('../middleware/auth');
 
 const articleController = require('../controllers/newsArticleController');
 const userController = require('../controllers/User/userController');
+const questionController = require('../controllers/Question/questionController');
 
 const validateForm = require('../validation/validation');
 
@@ -25,6 +26,9 @@ user_route.post('/login', userController.loginUser);
 user_route.get('/getUserDetails', userController.getUserDetails);
 
 user_route.get('/getAllUserDetails', userController.getAllUserDetails);
+
+user_route.post('/addQuestion', questionController.addQuestion);
+
 
 module.exports = user_route;
 

@@ -16,30 +16,11 @@ export default function Login() {
     }
   }, []);
 
-  const [data, setData] = useState("");
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  /*useEffect(() => {
-    const getcredentials = () => {
-      getCredentials().then((res) => {
-        if (res.status === 200) {
-          setData(res.data[0]);
-          setFormData({
-            ...formData,
-            email: res.data[0]?.email,
-            password: res.data[0]?.password,
-          });
-        } else {
-          toast("Data Fetching Failed!");
-        }
-      });
-    };
-
-    getcredentials();
-  }, []);*/
 
   const onChangeHandler = (e) => {
     setFormData({

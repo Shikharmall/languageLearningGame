@@ -5,7 +5,19 @@ const questionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  options: {
+  option1: {
+    type: String,
+    required: true,
+  },
+  option2: {
+    type: String,
+    required: true,
+  },
+  option3: {
+    type: String,
+    required: true,
+  },
+  option4: {
     type: String,
     required: true,
   },
@@ -17,8 +29,8 @@ const questionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  points: {
-    type: Number,
+  language: {
+    type: String,
     required: true,
   },
 });
