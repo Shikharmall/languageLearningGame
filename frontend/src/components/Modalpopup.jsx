@@ -30,19 +30,6 @@ function ModalSearch({ id, modalOpen, setModalOpen }) {
     modalOpen && searchInput.current.focus();
   }, [modalOpen]);
 
-  //useEffect(() => {
-  //  document.querySelector("html").style.scrollBehavior = "auto";
-  //  window.scroll({ top: 0 });
-  //  document.querySelector("html").style.scrollBehavior = "";
-  //}, [imgcontent]); // triggered on route change
-
-  //useEffect(() => {
-  //  const myDiv = document.getElementById("movetop");
-  //  myDiv.style.overflowX = "auto";
-  //  myDiv.scrollTop = 0;
-  //  myDiv.style.overflowX = "";
-  //}, []);
-
   return (
     <>
       {/* Modal backdrop */}

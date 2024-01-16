@@ -21,12 +21,7 @@ if (process.env.DATABASE === "MONGODBATLAS") {
 
 const cors = require("cors");
 
-let allowedOrigins = [
-  "http://localhost:5173",
-  "http://localhost:3000",
-  "https://analyticdashboard-ten.vercel.app",
-  "https://shikhar-react-portfolio.vercel.app",
-];
+let allowedOrigins = ["http://localhost:5173"];
 
 app.use(
   cors({
@@ -35,8 +30,8 @@ app.use(
   })
 );
 
-const articlesRoute = require("./routes/newsArticleRoute");
+const languageGameRoutes = require("./routes/languageGameRoute");
 
-app.use("/", articlesRoute);
+app.use("/", languageGameRoutes);
 
 app.listen(port);
