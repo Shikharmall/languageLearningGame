@@ -12,7 +12,7 @@ const LanguageGame = () => {
 
   useEffect(() => {
     const isLogin = localStorage.getItem("isLogin");
-    
+
     if (!isLogin) {
       navigate("/");
     }
@@ -36,7 +36,7 @@ const LanguageGame = () => {
   const handleSelectChangerow = (e) => {
     setPostsPerPage(e.target.value);
   };
-  
+
   return (
     <>
       <div className="flex h-screen overflow-hidden">
@@ -48,7 +48,10 @@ const LanguageGame = () => {
           {/*  Site header */}
           <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-          <div className="relative sm:rounded-lg p-3" id="movetop">
+          <div
+            className="relative sm:rounded-lg p-3 w-full h-full"
+            id="movetop"
+          >
             <>
               {/*
               <div className="flex flex-wrap items-center justify-between py-4 px-4 bg-white dark:bg-gray-800 rounded-tl-lg rounded-tr-lg">
@@ -366,30 +369,42 @@ const LanguageGame = () => {
                           */}
             </>
 
-            <div className="flex flex-wrap items-center justify-between py-4 px-4 bg-white dark:bg-gray-800 rounded-md">
-              <section class="text-gray-700 body-font overflow-hidden bg-white">
-                <div class="container px-5 py-24 mx-auto">
-                  <div class="lg:w-4/5 mx-auto flex items-center justify-center">
-                    <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-                      <h1 class="text-gray-800 text-3xl title-font font-medium mb-1">
-                        Language Learning Game
-                      </h1>
-                      <h2 class="text-sm title-font text-gray-500 tracking-widest">
-                        Game Instruction
-                      </h2>
+            <div className="flex flex-wrap items-center justify-between py-4 px-4 bg-white w-full h-full rounded-md">
+              <div className="container px-5 py-24 mx-auto">
+                <div className="lg:w-4/5 mx-auto flex items-center justify-center">
+                  <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+                    <h1 className="text-gray-800 text-3xl title-font font-medium mb-1">
+                      Language Learning Game
+                    </h1>
+                    <h2 className="text-sm title-font text-gray-500 tracking-widest">
+                      Game Instruction
+                    </h2>
 
-                      <p class="leading-relaxed">
-                        1. Fam locavore kickstarter distillery. Mixtape
-                        chillwave tumeric sriracha taximy chia microdosing tilde
-                        DIY. <br />
-                        2. XOXO fam indxgo juiceramps cornhole raw denim forage
-                        brooklyn. <br />
-                        3. Everyday carry +1 seitan poutine tumeric.Gastropub
-                        blue bottle austin listicle pour-over, neutra jean
-                        shorts keytar banjo tattooed umami cardigan.
-                      </p>
-                      <div class="flex mt-2 items-center pb-2 border-b-2 border-gray-200 mb-5"></div>
-                      <div class="flex justify-center">
+                    <p className="leading-relaxed">
+                      1. You will be given 180 seconds(i.e. 3 min). <br />
+                      2. You have to attempt maximum number of questions. <br />
+                      3. You will have three level of question i.e. easy(of 5
+                      points), medium(of 10 points)hard(of 20 points). <br />
+                      4. Based on your score, you will be assign gloabal rank.
+                    </p>
+                    <div className="flex mt-2 items-center pb-2 border-b-2 border-gray-200 mb-5"></div>
+                    <div className="flex justify-center">
+                        <select
+                          type="text"
+                          name="language"
+                          id="language"
+                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full m-1 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          required
+                          //onChange={(e) => onChangeHandler(e, index)}
+                          //value={obj[index].language}
+                        >
+                          <option value="" disabled>
+                            Select Language
+                          </option>
+                          <option value="english">English</option>
+                          <option value="hindi">Hindi</option>
+                          <option value="french">French</option>
+                        </select>
                         <button
                           //onClick={submitHandler}
                           onClick={(e) => {
@@ -397,15 +412,14 @@ const LanguageGame = () => {
                             setSearchModalOpen(true);
                           }}
                           type="submit"
-                          className="text-white bg-blue-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                          className="text-white bg-blue-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm m-1 px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                         >
                           Start Game
                         </button>
-                      </div>
                     </div>
                   </div>
                 </div>
-              </section>
+              </div>
             </div>
           </div>
         </div>
@@ -415,9 +429,6 @@ const LanguageGame = () => {
         searchId="search"
         modalOpen={searchModalOpen}
         setModalOpen={setSearchModalOpen}
-        imgcontent={
-          "https://uploadblogsimage.s3.ap-south-1.amazonaws.com/a59fd069-1d04-48f7-a26e-b061adb50e76-Annotation%202024-01-13%20205025.png"
-        }
       />
     </>
   );

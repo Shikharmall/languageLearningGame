@@ -58,7 +58,10 @@ const UserDetails = () => {
 
           {/*<Navigation />*/}
 
-          <div className="relative sm:rounded-lg p-3 w-full h-full" id="movetop">
+          <div
+            className="relative sm:rounded-lg p-3 w-full h-full"
+            id="movetop"
+          >
             <>
               {loader ? (
                 <div className="flex justify-center items-center w-full h-full overflow-hidden">
@@ -84,7 +87,7 @@ const UserDetails = () => {
                           {data?.name}
                           <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300 ml-2">
                             <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
-                            Hoa
+                            Rank- 5296
                           </span>
                           {memberdetaill.role === "mdsAdmin" ? (
                             <span class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300 ml-2">
@@ -257,18 +260,6 @@ const UserDetails = () => {
                               {data?.email}
                             </dd>
                           </div>
-                          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 text-gray-900">
-                              Password
-                            </dt>
-                            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                              *********
-                            </dd>
-                          </div>
-                          {/*<div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                              <dt className="text-sm font-medium leading-6 text-gray-900">Society Name</dt>
-                              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{showsocietydetails.societyName}</dd>
-                            </div>*/}
                           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                             <dt className="text-sm font-medium leading-6 text-gray-900">
                               Attachments

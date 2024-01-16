@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react";
 import Transition from "../utils/Transition";
 import Timer from "./Timer";
 
-function ModalSearch({ id, modalOpen, setModalOpen, imgcontent }) {
+function ModalSearch({ id, modalOpen, setModalOpen }) {
   const modalContent = useRef(null);
   const searchInput = useRef(null);
 
