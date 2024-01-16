@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
 import NoAccess from "../components/NoAccess";
-
-import Loaderimage from "../images/loader.gif";
-import img2 from "../images/userr.png";
+import { Audio } from "react-loader-spinner";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { getUserDetailsAPI } from "../Api/UserAPI/UserAPI";
 import QuestionForm from "../components/QuestionForm";
@@ -56,7 +54,15 @@ const Admin = () => {
 
           {loader ? (
             <div className="flex justify-center items-center w-full h-full overflow-hidden">
-              <img src={Loaderimage} alt="loader" className="w-20 h-20" />
+              <Audio
+                height="80"
+                width="80"
+                radius="9"
+                color="blue"
+                ariaLabel="loading"
+                wrapperStyle
+                wrapperClass
+              />
             </div>
           ) : (
             <>{data?.isAdmin ? <QuestionForm /> : <NoAccess />}</>

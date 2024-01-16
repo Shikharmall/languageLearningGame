@@ -19,6 +19,7 @@
     "react-day-picker": "^8.9.1",
     "react-dom": "^18.2.0",
     "react-flatpickr": "^3.10.13",
+    "react-loader-spinner": "^6.1.6",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.11.2",
     "react-select": "^5.7.7",

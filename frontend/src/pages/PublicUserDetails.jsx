@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
-
-import Loaderimage from "../images/loader.gif";
+import { Audio } from "react-loader-spinner";
 import img2 from "../images/userr.png";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { getUserDetailsAPI } from "../Api/UserAPI/UserAPI";
@@ -59,11 +58,19 @@ const UserDetails = () => {
 
           {/*<Navigation />*/}
 
-          <div className="relative sm:rounded-lg p-3" id="movetop">
+          <div className="relative sm:rounded-lg p-3 w-full h-full" id="movetop">
             <>
               {loader ? (
                 <div className="flex justify-center items-center w-full h-full overflow-hidden">
-                  <img src={Loaderimage} alt="loader" className="w-20 h-20" />
+                  <Audio
+                    height="80"
+                    width="80"
+                    radius="9"
+                    color="blue"
+                    ariaLabel="loading"
+                    wrapperStyle
+                    wrapperClass
+                  />
                 </div>
               ) : (
                 <div className="flex flex-row flex-wrap" id="changeflex">

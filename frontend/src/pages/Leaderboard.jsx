@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Loaderimage from "../images/loader.gif";
-
+import { Audio } from "react-loader-spinner";
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
 import LeaderboardTable from "../components/LeaderboardTable";
@@ -32,15 +31,7 @@ function Dashboard() {
           {/*  Site header */}
           <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-          {loader ? (
-            <div className="flex justify-center items-center w-full h-full overflow-hidden">
-              <img src={Loaderimage} alt="loader" className="w-20 h-20" />
-            </div>
-          ) : (
-            <>
-              <LeaderboardTable />
-            </>
-          )}
+          <LeaderboardTable />
         </div>
       </div>
     </>

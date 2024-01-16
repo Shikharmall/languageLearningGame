@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from "../partials/Sidebar";
-import Header from "../partials/Header";
 import img1 from "../images/user.png";
-import Loaderimage from "../images/loader.gif";
+import { Audio } from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
 import { NavLink } from "react-router-dom";
 import { API_URL_BASE } from "../utils/apiURL";
@@ -170,64 +168,69 @@ const LeaderboardTable = (
   console.log(filteredUserData);
 
   return (
-    <div className="relative sm:rounded-lg p-3" id="movetop">
+    <div className="relative sm:rounded-lg p-3 w-full h-full" id="movetop">
       {action ? (
         <>
-          <div className="flex flex-wrap items-center justify-between py-4 px-4 bg-white dark:bg-gray-800 rounded-tl-lg rounded-tr-lg">
-            <div className="relative p-2">
-              <button
-                id="dropdownActionButton"
-                data-dropdown-toggle="dropdownAction"
-                className="inline-flex items-center text-blue-500 bg-white border border-blue-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 m-1"
-                type="button"
-                onClick={() => {
-                  setAction(false);
-                }}
-              >
-                Add Society +
-              </button>
-            </div>
-
-            <div className="relative p-2 box-border">
-              <label htmlFor="table-search" className="sr-only">
-                Search
-              </label>
-              <div className="absolute inset-y-0 left-0 flex items-center pl-5 pointer-events-none">
-                <svg
-                  className="w-4 h-4 text-blue-500 dark:text-gray-400"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                  />
-                </svg>
-              </div>
-              <input
-                type="text"
-                id="table-search-users"
-                className="block p-2 pl-10 text-sm text-blue-500 border border-blue-300 placeholder-blue-400 rounded-lg w-full bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 box-border"
-                placeholder="Search for users"
-                value={search}
-                onChange={filterhoadata}
-              />
-            </div>
-          </div>
-
           {loader ? (
-            <div className="w-full h-full">
-              <div className="flex justify-center p-30 pb-10 bg-white dark:bg-gray-800">
-                <img src={Loaderimage} alt="loader" className="w-20 h-20" />
-              </div>
+            <div className="flex justify-center items-center w-full h-full overflow-hidden">
+              <Audio
+                height="80"
+                width="80"
+                radius="9"
+                color="blue"
+                ariaLabel="loading"
+                wrapperStyle
+                wrapperClass
+              />
             </div>
           ) : (
             <>
+              <div className="flex flex-wrap items-center justify-between py-4 px-4 bg-white dark:bg-gray-800 rounded-tl-lg rounded-tr-lg">
+                <div className="relative p-2">
+                  <button
+                    id="dropdownActionButton"
+                    data-dropdown-toggle="dropdownAction"
+                    className="inline-flex items-center text-blue-500 bg-white border border-blue-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 m-1"
+                    type="button"
+                    onClick={() => {
+                      setAction(false);
+                    }}
+                  >
+                    Add Society +
+                  </button>
+                </div>
+
+                <div className="relative p-2 box-border">
+                  <label htmlFor="table-search" className="sr-only">
+                    Search
+                  </label>
+                  <div className="absolute inset-y-0 left-0 flex items-center pl-5 pointer-events-none">
+                    <svg
+                      className="w-4 h-4 text-blue-500 dark:text-gray-400"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                      />
+                    </svg>
+                  </div>
+                  <input
+                    type="text"
+                    id="table-search-users"
+                    className="block p-2 pl-10 text-sm text-blue-500 border border-blue-300 placeholder-blue-400 rounded-lg w-full bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 box-border"
+                    placeholder="Search for users"
+                    value={search}
+                    onChange={filterhoadata}
+                  />
+                </div>
+              </div>
               <div className="w-full text-sm text-left text-gray-500 dark:text-gray-400 overflow-x-auto">
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
