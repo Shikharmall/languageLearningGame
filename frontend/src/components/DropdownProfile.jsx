@@ -1,13 +1,11 @@
 import React, { useState, useRef, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Transition from "../utils/Transition";
-import { authContext } from "./context/AuthContext/AuthContext";
 import { useNavigate } from "react-router-dom";
 import UserAvatar from "../images/user-avatar-32.png";
 function DropdownProfile({ align }) {
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const { userAuth, error } = useContext(authContext);
 
   const trigger = useRef(null);
   const dropdown = useRef(null);
