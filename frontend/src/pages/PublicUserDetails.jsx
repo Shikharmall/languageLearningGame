@@ -5,7 +5,10 @@ import { Audio } from "react-loader-spinner";
 import img2 from "../images/userr.png";
 import "../css/default.css";
 import { useParams, useNavigate } from "react-router-dom";
-import { getUserDetailsAPI } from "../Api/UserAPI/UserAPI";
+import {
+  getAllUsersDetailsAPI,
+  getUserDetailsAPI,
+} from "../Api/UserAPI/UserAPI";
 
 const UserDetails = () => {
   const navigate = useNavigate();
@@ -21,6 +24,8 @@ const UserDetails = () => {
 
   const [data, setData] = useState("");
 
+  const [rank, setRank] = useState(0);
+
   const [loader, setLoader] = useState(true);
 
   useEffect(() => {
@@ -28,7 +33,7 @@ const UserDetails = () => {
       //setLoader(true);
       getUserDetailsAPI(user_id).then((res) => {
         if (res.status === 200) {
-          setLoader(false);
+          //setLoader(false);
           setData(res?.data?.data);
         } else {
           console.log("Data Fetching Failed!");
@@ -37,6 +42,32 @@ const UserDetails = () => {
     };
     getUserDetailsFunc(user_id);
   }, [user_id]);
+
+  const [userData, setUserData] = useState([]);
+
+  useEffect(() => {
+    const getAllUsersDetailsFunc = () => {
+      getAllUsersDetailsAPI().then((res) => {
+        if (res.status === 200) {
+          setUserData(res?.data?.data);
+          let rank = 0;
+          userData.forEach(function (obj) {
+            if (obj._id === data._id) {
+              //break;
+              setRank(rank+1);
+              setLoader(false);
+              return;
+            } else {
+              rank = Number(rank) + 1;
+            }
+          });
+        } else {
+          console.log("Data Fetching Failed!");
+        }
+      });
+    };
+    getAllUsersDetailsFunc();
+  }, [userData, data._id]);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -86,13 +117,13 @@ const UserDetails = () => {
                         </h3>
                         <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
                           {data?.name}
-                          <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300 ml-2">
-                            <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
-                            Rank- 5296
+                          <span className="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300 ml-2">
+                            <span className="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+                            Rank- #{rank}
                           </span>
                           {memberdetaill.role === "mdsAdmin" ? (
-                            <span class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300 ml-2">
-                              <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
+                            <span className="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300 ml-2">
+                              <span className="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
                               Hoa
                             </span>
                           ) : null}
@@ -150,15 +181,15 @@ const UserDetails = () => {
                         </div>
                         <div className="flex flex-wrap m-0">
                           <div className="flex items-center m-1">
-                            <span class="flex w-3 h-3 m-1 bg-red-500 rounded-full"></span>{" "}
+                            <span className="flex w-3 h-3 m-1 bg-red-500 rounded-full"></span>{" "}
                             <p>Easy(56%)</p>
                           </div>
                           <div className="flex items-center m-1">
-                            <span class="flex w-3 h-3 m-1 bg-blue-600 rounded-full"></span>{" "}
+                            <span className="flex w-3 h-3 m-1 bg-blue-600 rounded-full"></span>{" "}
                             <p>Medium(70%)</p>
                           </div>
                           <div className="flex items-center m-1">
-                            <span class="flex w-3 h-3 m-1 bg-green-500 rounded-full"></span>{" "}
+                            <span className="flex w-3 h-3 m-1 bg-green-500 rounded-full"></span>{" "}
                             <p>Hard(56%)</p>
                           </div>
                         </div>
@@ -203,6 +234,14 @@ const UserDetails = () => {
                             </dt>
                             <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                               {data?.email}
+                            </dd>
+                          </div>
+                          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                            <dt className="text-sm font-medium leading-6 text-gray-900">
+                              Total Score
+                            </dt>
+                            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                              {data?.score} points
                             </dd>
                           </div>
                           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">

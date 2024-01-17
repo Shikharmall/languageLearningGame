@@ -93,6 +93,7 @@ function ModalSearch({ id, modalOpen, setModalOpen, language }) {
     updateScoreAPI(formData).then((res) => {
       if (res.status === 201) {
         setLoader(false);
+        localStorage.setItem("score", 0);
         setModalOpen(false);
       } else {
         console.log("Data Update Failed!");

@@ -114,6 +114,7 @@ function DropdownProfile({ align }) {
               onClick={() => {
                 localStorage.removeItem("isLogin");
                 localStorage.removeItem("user_id");
+                localStorage.removeItem("score");
                 navigate('/');
               }}
               >
