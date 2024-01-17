@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const Timer = () => {
+const Timer = ({allScoreToUserFunc}) => {
   const [seconds, setSeconds] = useState(60);
 
   useEffect(() => {
@@ -14,7 +14,7 @@ const Timer = () => {
   }, []); // The empty dependency array ensures that the effect runs only once on mount
 
   if(seconds === 0){
-    
+    allScoreToUserFunc();
   }
 
   return (

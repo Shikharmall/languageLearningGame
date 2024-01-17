@@ -405,7 +405,7 @@ const LanguageGame = () => {
                         onChange={(e) => handleLanguageChange(e)}
                         value={language}
                       >
-                        <option value="" disabled>
+                        <option disabled>
                           Select Language
                         </option>
                         <option value="english">English</option>

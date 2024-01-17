@@ -61,7 +61,7 @@ function ModalSearch({ id, modalOpen, setModalOpen, language }) {
   useEffect(() => {
     getAllUsersDetailsFunc(language);
     localStorage.setItem("score", 0);
-  }, []);
+  }, [language]);
 
   const recall = () => {
     if (selectedOption === questionData?.correctOption) {
@@ -150,7 +150,9 @@ function ModalSearch({ id, modalOpen, setModalOpen, language }) {
               >
                 End Game
               </button>
-              {modalOpen ? <Timer /> : null}
+              {modalOpen ? (
+                <Timer allScoreToUserFunc={allScoreToUserFunc} />
+              ) : null}
             </div>
 
             {loader ? (
