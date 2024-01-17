@@ -3,7 +3,8 @@ import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
 import { Audio } from "react-loader-spinner";
 import img2 from "../images/userr.png";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import "../css/default.css";
+import { useParams, useNavigate } from "react-router-dom";
 import { getUserDetailsAPI } from "../Api/UserAPI/UserAPI";
 
 const UserDetails = () => {
@@ -122,101 +123,45 @@ const UserDetails = () => {
                     <br />
 
                     <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                      <div className="flex items-center justify-center p-6 space-x-2 rounded-b dark:border-gray-600">
-                        {memberdetaill.role === "mdsHead" ? (
-                          <>
-                            {memberdetaill.isMemberVerified === true ? (
-                              <button
-                                type="submit"
-                                className="text-white bg-blue-700 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                              >
-                                Verified
-                              </button>
-                            ) : (
-                              <button
-                                type="submit"
-                                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  verifyhoa(memberdetaill._id);
-                                  verifyMember(memberdetaill._id);
-                                }}
-                              >
-                                Verify
-                              </button>
-                            )}
-                          </>
-                        ) : (
-                          <>
-                            {memberdetaill.isMemberVerified === true ? (
-                              <button
-                                type="submit"
-                                className="text-white bg-blue-700 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                              >
-                                Verified
-                              </button>
-                            ) : (
-                              <>
-                                <button
-                                  type="submit"
-                                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    verifyMember(memberdetaill._id);
-                                  }}
-                                >
-                                  Verify
-                                </button>
-                              </>
-                            )}
-                          </>
-                        )}
-
-                        {memberdetaill.role === "mdsHead" ? (
-                          <button
-                            type="submit"
-                            className="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-                          >
-                            HOA
-                          </button>
-                        ) : (
-                          <>
-                            {memberdetaill.role === "mdsAdmin" ? (
-                              <button
-                                type="submit"
-                                className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
-                                onClick={() =>
-                                  removeFromAdmin1(memberdetaill._id)
-                                }
-                              >
-                                Dismiss Admin
-                              </button>
-                            ) : (
-                              <button
-                                type="submit"
-                                className="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-                                onClick={() =>
-                                  changeToAdmin1(memberdetaill._id)
-                                }
-                              >
-                                Make Admin
-                              </button>
-                            )}
-                          </>
-                        )}
-
-                        {memberdetaill.role === "mdsHead" ? null : (
-                          <button
-                            type="submit"
-                            className="text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              deleteMember();
-                            }}
-                          >
-                            Delete
-                          </button>
-                        )}
+                      <div className="flex flex-col items-center justify-center p-6 space-x-0 rounded-b dark:border-gray-600 ">
+                        <div className="relative w-full">
+                          <div className="px-4 sm:px-0 pb-2">
+                            <h3 className="text-base font-semibold leading-7 text-gray-900">
+                              Status
+                            </h3>
+                            <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
+                              Dimension
+                            </p>
+                          </div>
+                          <div className="overflow-hidden h-4 text-xs flex rounded w-full">
+                            <div
+                              style={{ width: "25%" }}
+                              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
+                            ></div>
+                            <div
+                              style={{ width: "75%" }}
+                              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"
+                            ></div>
+                            <div
+                              style={{ width: "25%" }}
+                              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-500"
+                            ></div>
+                          </div>
+                        </div>
+                        <div className="flex flex-wrap m-0">
+                          <div className="flex items-center m-1">
+                            <span class="flex w-3 h-3 m-1 bg-red-500 rounded-full"></span>{" "}
+                            <p>Easy(56%)</p>
+                          </div>
+                          <div className="flex items-center m-1">
+                            <span class="flex w-3 h-3 m-1 bg-blue-600 rounded-full"></span>{" "}
+                            <p>Medium(70%)</p>
+                          </div>
+                          <div className="flex items-center m-1">
+                            <span class="flex w-3 h-3 m-1 bg-green-500 rounded-full"></span>{" "}
+                            <p>Hard(56%)</p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

@@ -5,6 +5,7 @@ import { Audio } from "react-loader-spinner";
 import img2 from "../images/userr.png";
 import { useNavigate } from "react-router-dom";
 import { getUserDetailsAPI } from "../Api/UserAPI/UserAPI";
+import "../css/default.css";
 
 const UserDetails = () => {
   const navigate = useNavigate();

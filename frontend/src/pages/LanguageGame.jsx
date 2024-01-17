@@ -37,6 +37,13 @@ const LanguageGame = () => {
     setPostsPerPage(e.target.value);
   };
 
+  const [language, setLanguage] = useState("english"); // State to store the selected category
+
+  // Function to handle changes in the selected category
+  const handleLanguageChange = (event) => {
+    setLanguage(event.target.value);
+  };
+
   return (
     <>
       <div className="flex h-screen overflow-hidden">
@@ -381,41 +388,41 @@ const LanguageGame = () => {
                     </h2>
 
                     <p className="leading-relaxed">
-                      1. You will be given 180 seconds(i.e. 3 min). <br />
+                      1. You will be given 60 seconds(i.e. 1 min). <br />
                       2. You have to attempt maximum number of questions. <br />
                       3. You will have three level of question i.e. easy(of 5
                       points), medium(of 10 points)hard(of 20 points). <br />
-                      4. Based on your score, you will be assign gloabal rank.
+                      4. Based on your score, you will be assign global rank.
                     </p>
                     <div className="flex mt-2 items-center pb-2 border-b-2 border-gray-200 mb-5"></div>
                     <div className="flex justify-center">
-                        <select
-                          type="text"
-                          name="language"
-                          id="language"
-                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full m-1 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          required
-                          //onChange={(e) => onChangeHandler(e, index)}
-                          //value={obj[index].language}
-                        >
-                          <option value="" disabled>
-                            Select Language
-                          </option>
-                          <option value="english">English</option>
-                          <option value="hindi">Hindi</option>
-                          <option value="french">French</option>
-                        </select>
-                        <button
-                          //onClick={submitHandler}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSearchModalOpen(true);
-                          }}
-                          type="submit"
-                          className="text-white bg-blue-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm m-1 px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                        >
-                          Start Game
-                        </button>
+                      <select
+                        type="text"
+                        name="language"
+                        id="language"
+                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full m-1 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        required
+                        onChange={(e) => handleLanguageChange(e)}
+                        value={language}
+                      >
+                        <option value="" disabled>
+                          Select Language
+                        </option>
+                        <option value="english">English</option>
+                        <option value="hindi">Hindi</option>
+                        <option value="french">French</option>
+                      </select>
+                      <button
+                        //onClick={submitHandler}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSearchModalOpen(true);
+                        }}
+                        type="submit"
+                        className="text-white bg-blue-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm m-1 px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                      >
+                        Start Game
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -429,6 +436,7 @@ const LanguageGame = () => {
         searchId="search"
         modalOpen={searchModalOpen}
         setModalOpen={setSearchModalOpen}
+        language={language}
       />
     </>
   );

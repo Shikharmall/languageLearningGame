@@ -14,6 +14,7 @@ import PublicUserDetails from "./pages/PublicUserDetails";
 import LanguageGame from "./pages/LanguageGame";
 import NotFound from "./components/NotFound";
 import Admin from "./pages/Admin";
+import Modalpopup from "./components/Modalpopup";
 
 function App() {
   const location = useLocation();
@@ -35,6 +36,7 @@ function App() {
         path="/publicUserdetails/:user_id"
         element={<PublicUserDetails />}
       />
+      <Route exact path="/game" element={<Modalpopup />} />
       <Route exact path="/languagegame" element={<LanguageGame />} />
       <Route exact path="/admin" element={<Admin />} />
       <Route path="*" element={<NotFound />} />

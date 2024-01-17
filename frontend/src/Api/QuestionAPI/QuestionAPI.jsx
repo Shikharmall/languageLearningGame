@@ -17,3 +17,17 @@ export const addQuestionAPI = async (data) => {
     return error;
   }
 };
+
+// API for getting question
+
+export const getQuestionAPI = async (language) => {
+  try {
+    let result = await axios(`${API_URL_BASE}/getQuestion?language=${language}`, {
+      method: "GET",
+      withCredentials: true,
+    });
+    return result;
+  } catch (error) {
+    return error;
+  }
+};

@@ -1,5 +1,4 @@
 const User = require("../../models/User/userModel");
-//const Contact = require("../models/portfolioContactModel");
 
 const { validationResult } = require("express-validator");
 

@@ -1,0 +1,32 @@
+
+
+@media screen and (max-width: 700px) {
+    /* CSS styles for screens with a max width of 600px or less */
+    #changeflex{
+        flex-direction: column;
+    }
+
+    #changeflex1,#changeflex2{
+        width: 100%;
+    }
+
+    #toogle{
+        display: none;
+    }
+
+    #flextorow{
+
+    }
+
+}
+
+@media screen and (max-width: 350px) {
+    /* CSS styles for screens with a max width of 600px or less */
+
+    #flextorow{
+      flex-direction: column;
+    }
+    
+}
+
+

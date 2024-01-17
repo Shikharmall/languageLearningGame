@@ -34,6 +34,21 @@ const addQuestion = async (req, res) => {
   }
 };
 
+const getQuestion = async (req, res) => {
+  try {
+    const {language} = req.query;
+    const count = await Question.countDocuments({ language });
+    const randomIndex = Math.floor(Math.random() * count);
+
+    const randomQuestion = await Question.findOne({ language }).skip(randomIndex);
+
+    return res.status(200).json({ status: "success", data: randomQuestion });
+  } catch (error) {
+    res.status(500).json({ status: "failed", message: error.message });
+  }
+};
+
 module.exports = {
-  addQuestion
+  addQuestion,
+  getQuestion,
 };

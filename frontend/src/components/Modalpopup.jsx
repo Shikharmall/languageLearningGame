@@ -1,8 +1,11 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Transition from "../utils/Transition";
 import Timer from "./Timer";
+import { Audio } from "react-loader-spinner";
+import { getQuestionAPI } from "../Api/QuestionAPI/QuestionAPI";
+import { updateScoreAPI } from "../Api/RankAPI/RankAPI";
 
-function ModalSearch({ id, modalOpen, setModalOpen }) {
+function ModalSearch({ id, modalOpen, setModalOpen, language }) {
   const modalContent = useRef(null);
   const searchInput = useRef(null);
 
@@ -29,6 +32,73 @@ function ModalSearch({ id, modalOpen, setModalOpen }) {
   useEffect(() => {
     modalOpen && searchInput.current.focus();
   }, [modalOpen]);
+
+  const [questionData, setQuestionData] = useState("");
+  const [isAnswered, setIsAnswered] = useState(false);
+  const [loader, setLoader] = useState(true);
+  const [questionPoint, setQuestionPoint] = useState(0);
+  const [loader1, setLoader1] = useState(false);
+
+  const getAllUsersDetailsFunc = (language) => {
+    setLoader(true);
+    getQuestionAPI(language).then((res) => {
+      if (res.status === 200) {
+        setLoader(false);
+        //console.log(res?.data?.data);
+        setQuestionData(res?.data?.data);
+        if (res?.data?.data?.level === "easy") {
+          setQuestionPoint(1);
+        } else if (res?.data?.data?.level === "medium") {
+          setQuestionPoint(3);
+        } else {
+          setQuestionPoint(5);
+        }
+      } else {
+        console.log("Data Fetching Failed!");
+      }
+    });
+  };
+  useEffect(() => {
+    getAllUsersDetailsFunc(language);
+    localStorage.setItem("score", 0);
+  }, []);
+
+  const recall = () => {
+    if (selectedOption === questionData?.correctOption) {
+      let score = localStorage.getItem("score");
+      score = Number(score) + Number(questionPoint);
+      localStorage.setItem("score", score);
+    }
+    setIsAnswered(false);
+    getAllUsersDetailsFunc(language);
+  };
+
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  const handleOptionChange = (event) => {
+    setIsAnswered(true);
+    setSelectedOption(event.target.value);
+  };
+
+  const [formData, setFormData] = useState({
+    user_id: "",
+    score: "",
+  });
+
+  const allScoreToUserFunc = () => {
+    setLoader(true);
+    const scoree = localStorage.getItem("score");
+    const user_idd = localStorage.getItem("user_id");
+    setFormData({ ...formData, user_id: user_idd, score: scoree });
+    updateScoreAPI(formData).then((res) => {
+      if (res.status === 201) {
+        setLoader(false);
+        setModalOpen(false);
+      } else {
+        console.log("Data Update Failed!");
+      }
+    });
+  };
 
   return (
     <>
@@ -72,7 +142,8 @@ function ModalSearch({ id, modalOpen, setModalOpen }) {
                 //onClick={submitHandler}
                 onClick={(e) => {
                   e.stopPropagation();
-                  setModalOpen(false);
+                  allScoreToUserFunc();
+                  //setModalOpen(false);
                 }}
                 type="submit"
                 className="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center m-2"
@@ -82,53 +153,176 @@ function ModalSearch({ id, modalOpen, setModalOpen }) {
               {modalOpen ? <Timer /> : null}
             </div>
 
+            {loader ? (
+              <div className="flex justify-center items-center w-full h-full overflow-hidden">
+                <Audio
+                  height="80"
+                  width="80"
+                  radius="9"
+                  color="blue"
+                  ariaLabel="loading"
+                  wrapperStyle
+                  wrapperClass
+                />
+              </div>
+            ) : (
               <section class="text-gray-700 body-font overflow-hidden bg-white">
                 <div class="container px-5 py-24 mx-auto">
                   <div class="mx-auto flex items-center justify-center">
                     <div class="w-full">
                       <h1 class="text-gray-800 text-3xl title-font font-medium mb-1">
-                       I spoke to ____ .
+                        {questionData.question}
                       </h1>
                       <br />
                       <h2 class="text-sm title-font text-gray-500 tracking-widest">
-                        Level- Easy
+                        Level- {questionData.level}
                       </h2>
                       <br />
 
                       <p class="leading-relaxed">
-                        <div className="flex items-center">
-                          <input type="radio" name="" id="" className="m-1" />
-                          <p className="m-1">
-                            1. Fam locavore kickstarter distillery. Mixtape
-                            chillwave tumeric sriracha taximy chia microdosing
-                            tilde DIY.
-                          </p>
-                        </div>
-                        <div className="flex items-center">
-                          <input type="radio" name="" id="" className="m-1" />
-                          <p className="m-1">
-                            2. Fam locavore kickstarter distillery. Mixtape
-                            chillwave tumeric sriracha taximy chia microdosing
-                            tilde DIY.
-                          </p>
-                        </div>
-                        <div className="flex items-center">
-                          <input type="radio" name="" id="" className="m-1" />
-                          <p className="m-1">
-                            3. Fam locavore kickstarter distillery. Mixtape
-                            chillwave tumeric sriracha taximy chia microdosing
-                            tilde DIY.
-                          </p>
-                        </div>
-                        <div className="flex items-center">
-                          <input type="radio" name="" id="" className="m-1" />
-                          <p className="m-1">
-                            4. Fam locavore kickstarter distillery. Mixtape
-                            chillwave tumeric sriracha taximy chia microdosing
-                            tilde DIY.
-                          </p>
+                        <div>
+                          <div className="flex items-center">
+                            {isAnswered ? (
+                              <input
+                                type="radio"
+                                value={questionData?.option1}
+                                checked={
+                                  selectedOption === questionData?.option1
+                                }
+                                onChange={handleOptionChange}
+                                className="m-1"
+                                disabled
+                              />
+                            ) : (
+                              <input
+                                type="radio"
+                                value={questionData?.option1}
+                                checked={
+                                  selectedOption === questionData?.option1
+                                }
+                                onChange={handleOptionChange}
+                                className="m-1"
+                              />
+                            )}
+                            <p
+                              className="m-1"
+                              style={{ opacity: isAnswered ? 1 : 0.5 }}
+                            >
+                              1. {questionData?.option1}
+                            </p>
+                          </div>
+                          <div className="flex items-center">
+                            {isAnswered ? (
+                              <input
+                                type="radio"
+                                value={questionData?.option2}
+                                checked={
+                                  selectedOption === questionData?.option2
+                                }
+                                onChange={handleOptionChange}
+                                className="m-1"
+                                disabled
+                              />
+                            ) : (
+                              <input
+                                type="radio"
+                                value={questionData?.option2}
+                                checked={
+                                  selectedOption === questionData?.option2
+                                }
+                                onChange={handleOptionChange}
+                                className="m-1"
+                              />
+                            )}
+                            <p
+                              className="m-1"
+                              style={{ opacity: isAnswered ? 1 : 0.5 }}
+                            >
+                              2. {questionData?.option2}
+                            </p>
+                          </div>
+                          <div className="flex items-center">
+                            {isAnswered ? (
+                              <input
+                                type="radio"
+                                value={questionData?.option3}
+                                checked={
+                                  selectedOption === questionData?.option3
+                                }
+                                onChange={handleOptionChange}
+                                className="m-1"
+                                disabled
+                              />
+                            ) : (
+                              <input
+                                type="radio"
+                                value={questionData?.option3}
+                                checked={
+                                  selectedOption === questionData?.option3
+                                }
+                                onChange={handleOptionChange}
+                                className="m-1"
+                              />
+                            )}
+                            <p
+                              className="m-1"
+                              style={{ opacity: isAnswered ? 1 : 0.5 }}
+                            >
+                              3. {questionData?.option3}
+                            </p>
+                          </div>
+                          <div className="flex items-center">
+                            {isAnswered ? (
+                              <input
+                                type="radio"
+                                value={questionData?.option4}
+                                checked={
+                                  selectedOption === questionData?.option4
+                                }
+                                onChange={handleOptionChange}
+                                className="m-1"
+                                //disabled={!isAnswered}
+                                disabled
+                              />
+                            ) : (
+                              <input
+                                type="radio"
+                                value={questionData?.option4}
+                                checked={
+                                  selectedOption === questionData?.option4
+                                }
+                                onChange={handleOptionChange}
+                                className="m-1"
+                                //disabled={!isAnswered}
+                              />
+                            )}
+                            <p
+                              className="m-1"
+                              style={{ opacity: isAnswered ? 1 : 0.5 }}
+                            >
+                              4. {questionData?.option4}
+                            </p>
+                          </div>
                         </div>
                       </p>
+                      {isAnswered ? (
+                        <>
+                          {selectedOption === questionData?.correctOption ? (
+                            <>
+                              <p class="leading-relaxed text-green-500">
+                                Correct answer: {questionData?.correctOption}
+                              </p>
+                            </>
+                          ) : (
+                            <>
+                              <p class="leading-relaxed text-red-500">
+                                Wrong answer! Correct answer is{" "}
+                                {questionData?.correctOption}
+                              </p>
+                            </>
+                          )}
+                        </>
+                      ) : null}
                       <div class="flex mt-2 items-center pb-5 border-b-2 border-gray-200 mb-5"></div>
                       <div class="flex justify-end">
                         <button
@@ -136,6 +330,7 @@ function ModalSearch({ id, modalOpen, setModalOpen }) {
                           onClick={(e) => {
                             e.stopPropagation();
                             //setSearchModalOpen(true);
+                            recall();
                           }}
                           type="submit"
                           className="text-white bg-blue-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
@@ -147,6 +342,7 @@ function ModalSearch({ id, modalOpen, setModalOpen }) {
                   </div>
                 </div>
               </section>
+            )}
           </div>
         </div>
       </Transition>
