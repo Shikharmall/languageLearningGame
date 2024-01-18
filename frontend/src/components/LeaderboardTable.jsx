@@ -10,6 +10,7 @@ const LeaderboardTable = () => {
   const pageNumbers = [];
 
   const [userData, setUserData] = useState([]);
+  const [firstRankUserData, setFirstRankUserData] = useState({});
 
   const [loader, setLoader] = useState(true);
 
@@ -20,6 +21,7 @@ const LeaderboardTable = () => {
         if (res.status === 200) {
           setLoader(false);
           setUserData(res?.data?.data);
+          setFirstRankUserData(res?.data?.data[0]);
         } else {
           console.log("Data Fetching Failed!");
         }
@@ -275,7 +277,7 @@ const LeaderboardTable = () => {
                                   src={img1}
                                   alt="Jese image"
                                 />
-                                {index === 0 ? (
+                                {item._id === firstRankUserData._id ? (
                                   <svg
                                     className="w-8 h-8 absolute left-1"
                                     style={{ top: -25 }}
@@ -313,7 +315,7 @@ const LeaderboardTable = () => {
                               </div>
                             </th>
 
-                            <td className="px-6 py-4">{index + 1}</td>
+                            <td className="px-6 py-4">#{index + 1}</td>
 
                             <td className="px-6 py-4">
                               <div className="flex items-center">
