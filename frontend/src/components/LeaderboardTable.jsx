@@ -6,24 +6,8 @@ import { NavLink } from "react-router-dom";
 import { API_URL_BASE } from "../utils/apiURL";
 import { getAllUsersDetailsAPI } from "../Api/UserAPI/UserAPI";
 
-const LeaderboardTable = (
-  {
-    //societydata,
-    //postsPerPage,
-    //totalPosts,
-    //paginate,
-    //currentPage,
-    //data1,
-    //data2,
-    //Loader,
-    //indexOfFirstPost,
-    //indexOfLastPost,
-    //rowperpage,
-  }
-) => {
+const LeaderboardTable = () => {
   const pageNumbers = [];
-
-  const [societydata, setSocietyData] = useState([]);
 
   const [userData, setUserData] = useState([]);
 
@@ -50,25 +34,22 @@ const LeaderboardTable = (
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  /*const filterhoadata = (e) => {
-    setSearch(e.target.value);
-    paginate(1);
-  };
 
-  const handleSelectChangerow = (e) => {
-    setPostsPerPage(e.target.value);
-  };*/
   const totalPosts = userData.length;
 
   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
     pageNumbers.push(i);
   }
 
+  const handleSelectChangerow = (e) => {
+    setPostsPerPage(e.target.value);
+  };
+
   //const [sidebarOpen, setSidebarOpen] = useState(false);
   const [action, setAction] = useState(true);
   const [search, setSearch] = useState("");
 
-  const filterhoadata = (e) => {
+  const filterUserData = (e) => {
     setSearch(e.target.value);
     paginate(1);
   };
@@ -146,12 +127,6 @@ const LeaderboardTable = (
     myDiv.style.overflowX = "";
   }, [action]);
 
-  const handleSelectChangerow = (e) => {
-    rowperpage(e.target.value);
-  };
-
-  //console.log(societydata);
-
   const filteredUserData = userData
     .filter((item) => {
       return (
@@ -227,7 +202,7 @@ const LeaderboardTable = (
                     className="block p-2 pl-10 text-sm text-blue-500 border border-blue-300 placeholder-blue-400 rounded-lg w-full bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 box-border"
                     placeholder="Search for users"
                     value={search}
-                    onChange={filterhoadata}
+                    onChange={filterUserData}
                   />
                 </div>
               </div>
@@ -395,7 +370,7 @@ const LeaderboardTable = (
                   </select>
                 </div>
 
-                {societydata.length > 0 ? (
+                {userData.length > 0 ? (
                   <a className="flex items-center justify-center px-3 h-8 ml-0 leading-tight text-gray-500 bg-white hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                     {currentPage} of {Math.ceil(totalPosts / postsPerPage)}
                   </a>
@@ -408,7 +383,7 @@ const LeaderboardTable = (
                 <nav aria-label="Page navigation example">
                   <ul className="inline-flex -space-x-px text-sm">
                     <li>
-                      {societydata.length > 0 ? (
+                      {userData.length > 0 ? (
                         <>
                           {currentPage === 1 ? (
                             <a
@@ -436,7 +411,7 @@ const LeaderboardTable = (
                     </li>
 
                     <li>
-                      {societydata.length > 0 ? (
+                      {userData.length > 0 ? (
                         <a className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover-bg-gray-100 hover-text-gray-700 dark-bg-gray-800 dark-border-gray-700 dark-text-gray-400 dark-hover-bg-gray-700 dark-hover-text-white">
                           {currentPage}
                         </a>
@@ -448,7 +423,7 @@ const LeaderboardTable = (
                     </li>
 
                     <li>
-                      {societydata.length > 0 ? (
+                      {userData.length > 0 ? (
                         <>
                           {currentPage ===
                           Math.ceil(totalPosts / postsPerPage) ? (

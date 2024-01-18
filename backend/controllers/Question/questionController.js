@@ -36,13 +36,81 @@ const addQuestion = async (req, res) => {
 
 const getQuestion = async (req, res) => {
   try {
-    const {language} = req.query;
+    const { language } = req.query;
     const count = await Question.countDocuments({ language });
     const randomIndex = Math.floor(Math.random() * count);
 
-    const randomQuestion = await Question.findOne({ language }).skip(randomIndex);
+    const randomQuestion = await Question.findOne({ language }).skip(
+      randomIndex
+    );
 
     return res.status(200).json({ status: "success", data: randomQuestion });
+  } catch (error) {
+    res.status(500).json({ status: "failed", message: error.message });
+  }
+};
+
+const getAllQuestions = async (req, res) => {
+  try {
+    const { language, level } = req.query;
+
+    if (language === "all" && level === "all") {
+      const questionsData = await Question.find();
+      return res.status(200).json({ status: "success", data: questionsData });
+    } else if (language === "all") {
+      const questionsData = await Question.find({ level: level });
+      return res.status(200).json({ status: "success", data: questionsData });
+    } else if (level === "all") {
+      const questionsData = await Question.find({ language: language });
+      return res.status(200).json({ status: "success", data: questionsData });
+    }
+
+    const questionsData = await Question.find({
+      language: language,
+      level: level,
+    });
+
+    return res.status(200).json({ status: "success", data: questionsData });
+  } catch (error) {
+    res.status(500).json({ status: "failed", message: error.message });
+  }
+};
+
+const getQuestionByID = async (req, res) => {
+  try {
+    const { question_id } = req.query;
+
+    const questionData = await Question.findById({ _id: question_id });
+
+    return res.status(200).json({ status: "success", data: questionData });
+  } catch (error) {
+    res.status(500).json({ status: "failed", message: error.message });
+  }
+};
+
+const updateQuestion = async (req, res) => {
+  try {
+    const { question_id } = req.query;
+    const { question, option1, option2, option3, option4, level, language } =
+      req.body;
+
+    const questionData = await Question.updateOne(
+      { _id: question_id },
+      {
+        $set: {
+          question: question,
+          correctOption: option1,
+          option1: option1,
+          option2: option2,
+          option3: option3,
+          option4: option4,
+          level: level,
+          language: language,
+        },
+      }
+    );
+
+    return res.status(200).json({ status: "success", data: questionData });
   } catch (error) {
     res.status(500).json({ status: "failed", message: error.message });
   }
@@ -51,4 +119,7 @@ const getQuestion = async (req, res) => {
 module.exports = {
   addQuestion,
   getQuestion,
+  getAllQuestions,
+  getQuestionByID,
+  updateQuestion,
 };

@@ -7,10 +7,10 @@ import { CookiesProvider } from "react-cookie";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <CookiesProvider>
-      <Router>
-        <ThemeProvider>
-          <App />
-        </ThemeProvider>
-      </Router>
+    <Router>
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
+    </Router>
   </CookiesProvider>
 );

@@ -1,7 +1,7 @@
 const User = require("../../models/User/userModel");
 
 const { validationResult } = require("express-validator");
-
+ 
 const bcrypt = require("bcrypt");
 
 const securePasswordGenerate = async (password) => {

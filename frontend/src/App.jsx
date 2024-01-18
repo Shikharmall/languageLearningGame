@@ -15,6 +15,8 @@ import LanguageGame from "./pages/LanguageGame";
 import NotFound from "./components/NotFound";
 import Admin from "./pages/Admin";
 import Modalpopup from "./components/Modalpopup";
+import AllQuestions from "./pages/AllQuestions";
+import EditQuestion from "./pages/EditQuestion";
 
 function App() {
   const location = useLocation();
@@ -38,7 +40,9 @@ function App() {
       />
       <Route exact path="/game" element={<Modalpopup />} />
       <Route exact path="/languagegame" element={<LanguageGame />} />
-      <Route exact path="/admin" element={<Admin />} />
+      <Route exact path="/admin/allquestions" element={<AllQuestions />} />
+      <Route exact path="/admin/editquestion/:question_id" element={<EditQuestion />} />
+      <Route exact path="/admin/addquestions" element={<Admin />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

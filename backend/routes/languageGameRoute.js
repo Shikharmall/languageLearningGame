@@ -25,6 +25,12 @@ user_route.post("/addQuestion", questionController.addQuestion);
 
 user_route.get("/getQuestion", questionController.getQuestion);
 
+user_route.get("/getAllQuestions", questionController.getAllQuestions);
+
 user_route.post("/addScoreToUser", rankController.addScoreToUser);
+
+user_route.get("/getQuestionByID", questionController.getQuestionByID);
+
+user_route.patch("/updateQuestion", questionController.updateQuestion);
 
 module.exports = user_route;

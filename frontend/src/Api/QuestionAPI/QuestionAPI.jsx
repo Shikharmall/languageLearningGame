@@ -22,10 +22,67 @@ export const addQuestionAPI = async (data) => {
 
 export const getQuestionAPI = async (language) => {
   try {
-    let result = await axios(`${API_URL_BASE}/getQuestion?language=${language}`, {
-      method: "GET",
-      withCredentials: true,
-    });
+    let result = await axios(
+      `${API_URL_BASE}/getQuestion?language=${language}`,
+      {
+        method: "GET",
+        withCredentials: true,
+      }
+    );
+    return result;
+  } catch (error) {
+    return error;
+  }
+};
+
+// API for getting all questions
+
+export const getAllQuestionsAPI = async (language, level) => {
+  try {
+    let result = await axios(
+      `${API_URL_BASE}/getAllQuestions?language=${language}&level=${level}`,
+      {
+        method: "GET",
+        withCredentials: true,
+      }
+    );
+    return result;
+  } catch (error) {
+    return error;
+  }
+};
+
+// API for getting question by ID
+
+export const getQuestionByIDAPI = async (question_id) => {
+  try {
+    let result = await axios(
+      `${API_URL_BASE}/getQuestionByID?question_id=${question_id}`,
+      {
+        method: "GET",
+        withCredentials: true,
+      }
+    );
+    return result;
+  } catch (error) {
+    return error;
+  }
+};
+
+// API for updating question
+
+export const updateQuestionAPI = async (question_id, data) => {
+  try {
+    let result = await axios(
+      `${API_URL_BASE}/updateQuestion?question_id=${question_id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: data,
+      }
+    );
     return result;
   } catch (error) {
     return error;
