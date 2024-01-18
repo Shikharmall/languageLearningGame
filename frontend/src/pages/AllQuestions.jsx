@@ -300,8 +300,8 @@ const AllQuestions = () => {
                               </div>
                             </td>
 
-                            <td className="px-6 py-4 flex items-center flex-col">
-                              <div className="flex items-center">
+                            <td className="px-6 py-4">
+                              <div className="flex items-center justify-center">
                                 {item.option1}
                               </div>
                             </td>
