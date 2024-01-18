@@ -13,6 +13,16 @@ const LeaderboardTable = () => {
   const [firstRankUserData, setFirstRankUserData] = useState({});
 
   const [loader, setLoader] = useState(true);
+  const [language, setLanguage] = useState("all");
+  const [level, setLevel] = useState("all");
+
+  const handleLanguageChange = (e) => {
+    setLanguage(e.target.value);
+  };
+
+  const handleLevelChange = (e) => {
+    setLevel(e.target.value);
+  };
 
   useEffect(() => {
     const getAllUsersDetailsFunc = () => {
@@ -163,19 +173,24 @@ const LeaderboardTable = () => {
           ) : (
             <>
               <div className="flex flex-wrap items-center justify-end py-4 px-4 bg-white dark:bg-gray-800 rounded-tl-lg rounded-tr-lg">
-                {/*<div className="relative p-2">
-                  <button
-                    id="dropdownActionButton"
-                    data-dropdown-toggle="dropdownAction"
+                <div className="relative p-2">
+                  <select
+                    type="text"
+                    name="language"
+                    id="language"
                     className="inline-flex items-center text-blue-500 bg-white border border-blue-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 m-1"
-                    type="button"
-                    onClick={() => {
-                      setAction(false);
-                    }}
+                    //required
+
+                    onChange={(e) => handleLanguageChange(e)}
+                    value={language}
                   >
-                    Add Society +
-                  </button>
-                </div>*/}
+                    <option disabled>Select Language</option>
+                    <option value="all">All Language</option>
+                    <option value="english">English</option>
+                    <option value="hindi">Hindi</option>
+                    <option value="french">French</option>
+                  </select>
+                </div>
 
                 <div className="relative p-2 box-border">
                   <label htmlFor="table-search" className="sr-only">

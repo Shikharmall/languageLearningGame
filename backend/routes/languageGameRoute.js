@@ -5,7 +5,7 @@ const auth = require("../middleware/auth");
 
 const userController = require("../controllers/User/userController");
 const questionController = require("../controllers/Question/questionController");
-const rankController = require("../controllers/Rank/rankController");
+const responseController = require("../controllers/Response/responseController");
 
 const validateForm = require("../validation/validation");
 
@@ -27,7 +27,7 @@ user_route.get("/getQuestion", questionController.getQuestion);
 
 user_route.get("/getAllQuestions", questionController.getAllQuestions);
 
-user_route.post("/addScoreToUser", rankController.addScoreToUser);
+user_route.post("/addResponseToUser", responseController.addResponseToUser);
 
 user_route.get("/getQuestionByID", questionController.getQuestionByID);
 

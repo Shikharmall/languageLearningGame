@@ -14,7 +14,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  score: {
+  englishScore: {
+    type: Number,
+    required: true,
+  },
+  hindiScore: {
+    type: Number,
+    required: true,
+  },
+  frenchScore: {
     type: Number,
     required: true,
   },

@@ -20,10 +20,10 @@ export const addQuestionAPI = async (data) => {
 
 // API for getting question
 
-export const getQuestionAPI = async (language) => {
+export const getQuestionAPI = async (language,score) => {
   try {
     let result = await axios(
-      `${API_URL_BASE}/getQuestion?language=${language}`,
+      `${API_URL_BASE}/getQuestion?language=${language}&score=${score}`,
       {
         method: "GET",
         withCredentials: true,

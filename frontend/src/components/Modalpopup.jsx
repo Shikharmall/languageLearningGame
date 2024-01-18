@@ -3,7 +3,7 @@ import Transition from "../utils/Transition";
 import Timer from "./Timer";
 import { Audio } from "react-loader-spinner";
 import { getQuestionAPI } from "../Api/QuestionAPI/QuestionAPI";
-import { updateScoreAPI } from "../Api/RankAPI/RankAPI";
+import { addResponseToUserAPI } from "../Api/ResponseAPI/ResponseAPI";
 
 function ModalSearch({ id, modalOpen, setModalOpen, language }) {
   const modalContent = useRef(null);
@@ -39,9 +39,9 @@ function ModalSearch({ id, modalOpen, setModalOpen, language }) {
   const [questionPoint, setQuestionPoint] = useState(0);
   const [loader1, setLoader1] = useState(false);
 
-  const getAllUsersDetailsFunc = (language) => {
+  const getQuestionFunc = (language, score) => {
     setLoader(true);
-    getQuestionAPI(language).then((res) => {
+    getQuestionAPI(language, score).then((res) => {
       if (res.status === 200) {
         setLoader(false);
         //console.log(res?.data?.data);
@@ -59,18 +59,78 @@ function ModalSearch({ id, modalOpen, setModalOpen, language }) {
     });
   };
   useEffect(() => {
-    getAllUsersDetailsFunc(language);
+    getQuestionFunc(language, 0);
     localStorage.setItem("score", 0);
+    localStorage.setItem("easyCorrect", 0);
+    localStorage.setItem("easyIncorrect", 0);
+    localStorage.setItem("moderateCorrect", 0);
+    localStorage.setItem("moderateIncorrect", 0);
+    localStorage.setItem("hardCorrect", 0);
+    localStorage.setItem("hardIncorrect", 0);
   }, [language]);
 
   const recall = () => {
-    if (selectedOption === questionData?.correctOption) {
-      let score = localStorage.getItem("score");
+    let score = localStorage.getItem("score");
+    let easyCorrect = localStorage.getItem("easyCorrect");
+    let easyIncorrect = localStorage.getItem("easyIncorrect");
+    let moderateCorrect = localStorage.getItem("moderateCorrect");
+    let moderateIncorrect = localStorage.getItem("moderateIncorrect");
+    let hardCorrect = localStorage.getItem("hardCorrect");
+    let hardIncorrect = localStorage.getItem("hardIncorrect");
+
+    if (
+      questionData?.level === "easy" &&
+      selectedOption === questionData?.correctOption
+    ) {
       score = Number(score) + Number(questionPoint);
       localStorage.setItem("score", score);
+
+      easyCorrect = Number(easyCorrect) + 1;
+      localStorage.setItem("easyCorrect", easyCorrect);
+    } else if (
+      questionData?.level === "easy" &&
+      selectedOption !== questionData?.correctOption
+    ) {
+      easyIncorrect = Number(easyIncorrect) + 1;
+      localStorage.setItem("easyIncorrect", easyIncorrect);
     }
+
+    if (
+      questionData?.level === "moderate" &&
+      selectedOption === questionData?.correctOption
+    ) {
+      score = Number(score) + Number(questionPoint);
+      localStorage.setItem("score", score);
+
+      moderateCorrect = Number(moderateCorrect) + 1;
+      localStorage.setItem("moderateCorrect", moderateCorrect);
+    } else if (
+      questionData?.level === "moderate" &&
+      selectedOption !== questionData?.correctOption
+    ) {
+      moderateIncorrect = Number(moderateIncorrect) + 1;
+      localStorage.setItem("moderateIncorrect", moderateIncorrect);
+    }
+
+    if (
+      questionData?.level === "hard" &&
+      selectedOption === questionData?.correctOption
+    ) {
+      score = Number(score) + Number(questionPoint);
+      localStorage.setItem("score", score);
+
+      hardCorrect = Number(hardCorrect) + 1;
+      localStorage.setItem("hardCorrect", hardCorrect);
+    } else if (
+      questionData?.level === "hard" &&
+      selectedOption !== questionData?.correctOption
+    ) {
+      hardIncorrect = Number(hardIncorrect) + 1;
+      localStorage.setItem("hardIncorrect", hardIncorrect);
+    }
+
     setIsAnswered(false);
-    getAllUsersDetailsFunc(language);
+    getQuestionFunc(language, score);
   };
 
   const [selectedOption, setSelectedOption] = useState(null);
@@ -83,14 +143,38 @@ function ModalSearch({ id, modalOpen, setModalOpen, language }) {
   const [formData, setFormData] = useState({
     user_id: "",
     score: "",
+    easyCorrect: "",
+    easyIncorrect: "",
+    moderateCorrect: "",
+    moderateIncorrect: "",
+    hardCorrect: "",
+    hardIncorrect: "",
+    language: "",
   });
 
-  const allScoreToUserFunc = () => {
+  const addResponseToUserFunc = () => {
     setLoader(true);
     const scoree = localStorage.getItem("score");
     const user_idd = localStorage.getItem("user_id");
-    setFormData({ ...formData, user_id: user_idd, score: scoree });
-    updateScoreAPI(formData).then((res) => {
+    let easyCorrect = localStorage.getItem("easyCorrect");
+    let easyIncorrect = localStorage.getItem("easyIncorrect");
+    let moderateCorrect = localStorage.getItem("moderateCorrect");
+    let moderateIncorrect = localStorage.getItem("moderateIncorrect");
+    let hardCorrect = localStorage.getItem("hardCorrect");
+    let hardIncorrect = localStorage.getItem("hardIncorrect");
+    setFormData({
+      ...formData,
+      user_id: user_idd,
+      score: scoree,
+      easyCorrect: easyCorrect,
+      easyIncorrect: easyIncorrect,
+      moderateCorrect: moderateCorrect,
+      moderateIncorrect: moderateIncorrect,
+      hardCorrect: hardCorrect,
+      hardIncorrect: hardIncorrect,
+      language: language,
+    });
+    addResponseToUserAPI(formData).then((res) => {
       if (res.status === 201) {
         setLoader(false);
         localStorage.setItem("score", 0);
@@ -143,7 +227,7 @@ function ModalSearch({ id, modalOpen, setModalOpen, language }) {
                 //onClick={submitHandler}
                 onClick={(e) => {
                   e.stopPropagation();
-                  allScoreToUserFunc();
+                  addResponseToUserFunc();
                   //setModalOpen(false);
                 }}
                 type="submit"
@@ -152,7 +236,7 @@ function ModalSearch({ id, modalOpen, setModalOpen, language }) {
                 End Game
               </button>
               {modalOpen ? (
-                <Timer allScoreToUserFunc={allScoreToUserFunc} />
+                <Timer addResponseToUserFunc={addResponseToUserFunc} />
               ) : null}
             </div>
 
@@ -169,156 +253,138 @@ function ModalSearch({ id, modalOpen, setModalOpen, language }) {
                 />
               </div>
             ) : (
-              <section class="text-gray-700 body-font overflow-hidden bg-white">
-                <div class="container px-5 py-24 mx-auto">
-                  <div class="mx-auto flex items-center justify-center">
-                    <div class="w-full">
-                      <h1 class="text-gray-800 text-3xl title-font font-medium mb-1">
+              <section className="text-gray-700 body-font overflow-hidden bg-white">
+                <div className="container px-5 py-24 mx-auto">
+                  <div className="mx-auto flex items-center justify-center">
+                    <div className="w-full">
+                      <h1 className="text-gray-800 text-3xl title-font font-medium mb-1">
                         {questionData.question}
                       </h1>
                       <br />
-                      <h2 class="text-sm title-font text-gray-500 tracking-widest">
+                      <h2 className="text-sm title-font text-gray-500 tracking-widest">
                         Level- {questionData.level}
                       </h2>
                       <br />
 
-                      <p class="leading-relaxed">
-                        <div>
-                          <div className="flex items-center">
-                            {isAnswered ? (
-                              <input
-                                type="radio"
-                                value={questionData?.option1}
-                                checked={
-                                  selectedOption === questionData?.option1
-                                }
-                                onChange={handleOptionChange}
-                                className="m-1"
-                                disabled
-                              />
-                            ) : (
-                              <input
-                                type="radio"
-                                value={questionData?.option1}
-                                checked={
-                                  selectedOption === questionData?.option1
-                                }
-                                onChange={handleOptionChange}
-                                className="m-1"
-                              />
-                            )}
-                            <p
+                      <div className="leading-relaxed">
+                        <div className="flex items-center">
+                          {isAnswered ? (
+                            <input
+                              type="radio"
+                              value={questionData?.option1}
+                              checked={selectedOption === questionData?.option1}
+                              onChange={handleOptionChange}
                               className="m-1"
-                              style={{ opacity: isAnswered ? 1 : 0.5 }}
-                            >
-                              1. {questionData?.option1}
-                            </p>
-                          </div>
-                          <div className="flex items-center">
-                            {isAnswered ? (
-                              <input
-                                type="radio"
-                                value={questionData?.option2}
-                                checked={
-                                  selectedOption === questionData?.option2
-                                }
-                                onChange={handleOptionChange}
-                                className="m-1"
-                                disabled
-                              />
-                            ) : (
-                              <input
-                                type="radio"
-                                value={questionData?.option2}
-                                checked={
-                                  selectedOption === questionData?.option2
-                                }
-                                onChange={handleOptionChange}
-                                className="m-1"
-                              />
-                            )}
-                            <p
+                              disabled
+                            />
+                          ) : (
+                            <input
+                              type="radio"
+                              value={questionData?.option1}
+                              checked={selectedOption === questionData?.option1}
+                              onChange={handleOptionChange}
                               className="m-1"
-                              style={{ opacity: isAnswered ? 1 : 0.5 }}
-                            >
-                              2. {questionData?.option2}
-                            </p>
-                          </div>
-                          <div className="flex items-center">
-                            {isAnswered ? (
-                              <input
-                                type="radio"
-                                value={questionData?.option3}
-                                checked={
-                                  selectedOption === questionData?.option3
-                                }
-                                onChange={handleOptionChange}
-                                className="m-1"
-                                disabled
-                              />
-                            ) : (
-                              <input
-                                type="radio"
-                                value={questionData?.option3}
-                                checked={
-                                  selectedOption === questionData?.option3
-                                }
-                                onChange={handleOptionChange}
-                                className="m-1"
-                              />
-                            )}
-                            <p
-                              className="m-1"
-                              style={{ opacity: isAnswered ? 1 : 0.5 }}
-                            >
-                              3. {questionData?.option3}
-                            </p>
-                          </div>
-                          <div className="flex items-center">
-                            {isAnswered ? (
-                              <input
-                                type="radio"
-                                value={questionData?.option4}
-                                checked={
-                                  selectedOption === questionData?.option4
-                                }
-                                onChange={handleOptionChange}
-                                className="m-1"
-                                //disabled={!isAnswered}
-                                disabled
-                              />
-                            ) : (
-                              <input
-                                type="radio"
-                                value={questionData?.option4}
-                                checked={
-                                  selectedOption === questionData?.option4
-                                }
-                                onChange={handleOptionChange}
-                                className="m-1"
-                                //disabled={!isAnswered}
-                              />
-                            )}
-                            <p
-                              className="m-1"
-                              style={{ opacity: isAnswered ? 1 : 0.5 }}
-                            >
-                              4. {questionData?.option4}
-                            </p>
-                          </div>
+                            />
+                          )}
+                          <p
+                            className="m-1"
+                            style={{ opacity: isAnswered ? 1 : 0.5 }}
+                          >
+                            1. {questionData?.option1}
+                          </p>
                         </div>
-                      </p>
+                        <div className="flex items-center">
+                          {isAnswered ? (
+                            <input
+                              type="radio"
+                              value={questionData?.option2}
+                              checked={selectedOption === questionData?.option2}
+                              onChange={handleOptionChange}
+                              className="m-1"
+                              disabled
+                            />
+                          ) : (
+                            <input
+                              type="radio"
+                              value={questionData?.option2}
+                              checked={selectedOption === questionData?.option2}
+                              onChange={handleOptionChange}
+                              className="m-1"
+                            />
+                          )}
+                          <p
+                            className="m-1"
+                            style={{ opacity: isAnswered ? 1 : 0.5 }}
+                          >
+                            2. {questionData?.option2}
+                          </p>
+                        </div>
+                        <div className="flex items-center">
+                          {isAnswered ? (
+                            <input
+                              type="radio"
+                              value={questionData?.option3}
+                              checked={selectedOption === questionData?.option3}
+                              onChange={handleOptionChange}
+                              className="m-1"
+                              disabled
+                            />
+                          ) : (
+                            <input
+                              type="radio"
+                              value={questionData?.option3}
+                              checked={selectedOption === questionData?.option3}
+                              onChange={handleOptionChange}
+                              className="m-1"
+                            />
+                          )}
+                          <p
+                            className="m-1"
+                            style={{ opacity: isAnswered ? 1 : 0.5 }}
+                          >
+                            3. {questionData?.option3}
+                          </p>
+                        </div>
+                        <div className="flex items-center">
+                          {isAnswered ? (
+                            <input
+                              type="radio"
+                              value={questionData?.option4}
+                              checked={selectedOption === questionData?.option4}
+                              onChange={handleOptionChange}
+                              className="m-1"
+                              //disabled={!isAnswered}
+                              disabled
+                            />
+                          ) : (
+                            <input
+                              type="radio"
+                              value={questionData?.option4}
+                              checked={selectedOption === questionData?.option4}
+                              onChange={handleOptionChange}
+                              className="m-1"
+                              //disabled={!isAnswered}
+                            />
+                          )}
+                          <p
+                            className="m-1"
+                            style={{ opacity: isAnswered ? 1 : 0.5 }}
+                          >
+                            4. {questionData?.option4}
+                          </p>
+                        </div>
+                      </div>
                       {isAnswered ? (
                         <>
                           {selectedOption === questionData?.correctOption ? (
                             <>
-                              <p class="leading-relaxed text-green-500">
+                              <p className="leading-relaxed text-green-500">
                                 Correct answer: {questionData?.correctOption}
                               </p>
                             </>
                           ) : (
                             <>
-                              <p class="leading-relaxed text-red-500">
+                              <p className="leading-relaxed text-red-500">
                                 Wrong answer! Correct answer is{" "}
                                 {questionData?.correctOption}
                               </p>
@@ -326,8 +392,8 @@ function ModalSearch({ id, modalOpen, setModalOpen, language }) {
                           )}
                         </>
                       ) : null}
-                      <div class="flex mt-2 items-center pb-5 border-b-2 border-gray-200 mb-5"></div>
-                      <div class="flex justify-end">
+                      <div className="flex mt-2 items-center pb-5 border-b-2 border-gray-200 mb-5"></div>
+                      <div className="flex justify-end">
                         <button
                           //onClick={submitHandler}
                           onClick={(e) => {

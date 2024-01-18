@@ -36,13 +36,74 @@ const addQuestion = async (req, res) => {
 
 const getQuestion = async (req, res) => {
   try {
-    const { language } = req.query;
-    const count = await Question.countDocuments({ language });
+    const { language, score } = req.query;
+
+    let level = "easy";
+
+    if (score > 7 && score <= 14) {
+      level = "moderate";
+    } else if (score > 14) {
+      level = "hard";
+    }
+    const count = await Question.countDocuments({
+      language: language,
+      level: level,
+    });
+
+    if (count === 0 && level === "moderate") {
+      const count1 = await Question.countDocuments({
+        language: language,
+        level: "easy",
+      });
+      const randomIndex1 = Math.floor(Math.random() * count1);
+
+      const randomQuestion1 = await Question.findOne({
+        language: language,
+        level: "easy",
+      }).skip(randomIndex1);
+
+      return res.status(200).json({ status: "success", data: randomQuestion1 });
+    }
+
+    if (count === 0 && level === "hard") {
+      const count2 = await Question.countDocuments({
+        language: language,
+        level: "moderate",
+      });
+
+      if (count2 === 0 && level === "hard") {
+        const count3 = await Question.countDocuments({
+          language: language,
+          level: "easy",
+        });
+        const randomIndex3 = Math.floor(Math.random() * count3);
+
+        const randomQuestion3 = await Question.findOne({
+          language: language,
+          level: "easy",
+        }).skip(randomIndex3);
+
+        return res
+          .status(200)
+          .json({ status: "success", data: randomQuestion3 });
+      }
+
+      const randomIndex2 = Math.floor(Math.random() * count2);
+
+      const randomQuestion2 = await Question.findOne({
+        language: language,
+        level: "moderate",
+      }).skip(randomIndex2);
+
+      return res.status(200).json({ status: "success", data: randomQuestion2 });
+    }
+
     const randomIndex = Math.floor(Math.random() * count);
 
-    const randomQuestion = await Question.findOne({ language }).skip(
-      randomIndex
-    );
+    const randomQuestion = await Question.findOne({
+      language: language,
+      level: level,
+    }).skip(randomIndex);
 
     return res.status(200).json({ status: "success", data: randomQuestion });
   } catch (error) {

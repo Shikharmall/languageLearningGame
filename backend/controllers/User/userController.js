@@ -1,7 +1,7 @@
 const User = require("../../models/User/userModel");
 
 const { validationResult } = require("express-validator");
- 
+
 const bcrypt = require("bcrypt");
 
 const securePasswordGenerate = async (password) => {
@@ -46,9 +46,11 @@ const registerUser = async (req, res) => {
       name: name,
       email: email,
       password: spassword,
-      rank: 0,
+      englishScore: 0,
+      hindiScore: 0,
+      frenchScore: 0,
       isAdmin: false,
-      image: "image.png",
+      image: "N/A",
     });
 
     const userDataSaved = await userData.save();
@@ -112,7 +114,7 @@ const getUserDetails = async (req, res) => {
 const getAllUserDetails = async (req, res) => {
   try {
     // Find the user by email
-    const userData = await User.find().sort({ score: 'desc' });
+    const userData = await User.find().sort({ score: "desc" });
 
     return res.status(200).json({ status: "success", data: userData });
   } catch (error) {
