@@ -31,6 +31,11 @@ user_route.post("/addResponseToUser", responseController.addResponseToUser);
 
 user_route.get("/getQuestionByID", questionController.getQuestionByID);
 
+user_route.get(
+  "/getAllUserDetailsByLanguage",
+  userController.getAllUserDetailsByLanguage
+);
+
 user_route.patch("/updateQuestion", questionController.updateQuestion);
 
 module.exports = user_route;

@@ -122,9 +122,48 @@ const getAllUserDetails = async (req, res) => {
   }
 };
 
+const getAllUserDetailsByLanguage = async (req, res) => {
+  try {
+    const { language } = req.query;
+
+    if (language === "english") {
+      const userData = await User.find().sort({ englishScore: "desc" });
+      return res.status(200).json({ status: "success", data: userData });
+    }
+
+    if (language === "hindi") {
+      const userData = await User.find().sort({ hindiScore: "desc" });
+      return res.status(200).json({ status: "success", data: userData });
+    }
+
+    if (language === "french") {
+      const userData = await User.find().sort({ frenchScore: "desc" });
+      return res.status(200).json({ status: "success", data: userData });
+    }
+
+    const userData = await User.aggregate([
+      {
+        $addFields: {
+          totalScore: { $add: ["$englishScore", "$hindiScore", "$frenchScore"] }
+        }
+      },
+      {
+        $sort: {
+          totalScore: -1 // Sort in descending order based on totalScore
+        }
+      }
+    ]);
+
+    return res.status(200).json({ status: "success", data: userData });
+  } catch (error) {
+    res.status(500).json({ status: "failed", message: error.message });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
   getUserDetails,
   getAllUserDetails,
+  getAllUserDetailsByLanguage,
 };

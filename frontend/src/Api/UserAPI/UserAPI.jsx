@@ -65,3 +65,18 @@ export const getAllUsersDetailsAPI = async () => {
     return error;
   }
 };
+
+// API for getting all users details
+
+export const getAllUserDetailsByLanguageAPI = async (language) => {
+  try {
+    let result = await axios(`${API_URL_BASE}/getAllUserDetailsByLanguage?language=${language}`, {
+      method: "GET",
+      withCredentials: true,
+    });
+    return result;
+  } catch (error) {
+    return error;
+  }
+};
+

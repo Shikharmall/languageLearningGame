@@ -26,7 +26,7 @@ const responseSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    hardInCorrect: {
+    hardIncorrect: {
       type: Number,
       required: true,
     },

@@ -4,7 +4,7 @@ import { Audio } from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
 import { NavLink } from "react-router-dom";
 import { API_URL_BASE } from "../utils/apiURL";
-import { getAllUsersDetailsAPI } from "../Api/UserAPI/UserAPI";
+import { getAllUserDetailsByLanguageAPI } from "../Api/UserAPI/UserAPI";
 
 const LeaderboardTable = () => {
   const pageNumbers = [];
@@ -25,9 +25,9 @@ const LeaderboardTable = () => {
   };
 
   useEffect(() => {
-    const getAllUsersDetailsFunc = () => {
+    const getAllUsersDetailsFunc = (language) => {
       //setLoader(true);
-      getAllUsersDetailsAPI().then((res) => {
+      getAllUserDetailsByLanguageAPI(language).then((res) => {
         if (res.status === 200) {
           setLoader(false);
           setUserData(res?.data?.data);
@@ -37,8 +37,8 @@ const LeaderboardTable = () => {
         }
       });
     };
-    getAllUsersDetailsFunc();
-  }, []);
+    getAllUsersDetailsFunc(language);
+  }, [language]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(10);
@@ -247,10 +247,10 @@ const LeaderboardTable = () => {
                         User Name
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        Rank
+                        Global Rank
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        Score
+                        Global Score
                       </th>
                       <th scope="col" className="px-6 py-3">
                         View
@@ -334,7 +334,18 @@ const LeaderboardTable = () => {
 
                             <td className="px-6 py-4">
                               <div className="flex items-center">
-                                {item.score}
+                                {language === "all"
+                                  ? Number(item.englishScore) +
+                                    Number(item.hindiScore) +
+                                    Number(item.frenchScore)
+                                  : null}
+                                {language === "english"
+                                  ? item.englishScore
+                                  : null}
+                                {language === "hindi" ? item.hindiScore : null}
+                                {language === "french"
+                                  ? item.frenchScore
+                                  : null}
                               </div>
                             </td>
 

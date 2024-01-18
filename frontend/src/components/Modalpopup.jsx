@@ -181,6 +181,7 @@ function ModalSearch({ id, modalOpen, setModalOpen, language }) {
         setModalOpen(false);
       } else {
         console.log("Data Update Failed!");
+        console.log(res);
       }
     });
   };

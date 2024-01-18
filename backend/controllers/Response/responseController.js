@@ -11,7 +11,7 @@ const addResponseToUser = async (req, res) => {
       moderateCorrect,
       moderateIncorrect,
       hardCorrect,
-      hardInCorrect,
+      hardIncorrect,
       language,
     } = req.body;
 
@@ -22,7 +22,7 @@ const addResponseToUser = async (req, res) => {
       moderateCorrect: moderateCorrect,
       moderateIncorrect: moderateIncorrect,
       hardCorrect: hardCorrect,
-      hardInCorrect: hardInCorrect,
+      hardIncorrect: hardIncorrect,
       score: score,
       language: language,
     });
