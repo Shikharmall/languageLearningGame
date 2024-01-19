@@ -1,64 +1,226 @@
-import React, { useEffect, useRef, useState } from "react";
-import Chart from "chart.js/auto";
-import { PieController, CategoryScale, Legend, Tooltip } from 'chart.js';
-import 'chart.js';
+import { useEffect, useState } from "react";
+import {
+  getUserResponseAPI,
+  getUserResponseEnglishAPI,
+  getUserResponseFrenchAPI,
+  getUserResponseHindiAPI,
+} from "../Api/ResponseAPI/ResponseAPI";
 
-function Progress({ width, height }) {
-  const [data1, setData1] = useState([]);
-  const chartRef = useRef(null);
-  const [chartInstance, setChartInstance] = useState(null);
+function Progress({ data }) {
+  const user_id = localStorage.getItem("user_id");
+
+  const [response, setResponse] = useState("");
+  const [responseEnglish, setResponseEnglish] = useState("");
+  const [responseHindi, setResponseHindi] = useState("");
+  const [responseFrench, setResponseFrench] = useState("");
 
   useEffect(() => {
-    if (chartRef.current) {
-      const ctx = chartRef.current.getContext("2d");
+    if (user_id) {
+      const getUserResponseFunc = (user_id) => {
+        //setLoader(true);
+        getUserResponseAPI(user_id).then((res) => {
+          if (res.status === 200) {
+            //setLoader(false);
+            setResponse(res?.data?.data);
+          } else {
+            console.log("Data Fetching Failed!");
+          }
+        });
 
-      // Extract unique publication dates
-      const uniquePublicationDates = [...new Set(data1.map((item) => item.published))];
+        getUserResponseEnglishAPI(user_id).then((res) => {
+          if (res.status === 200) {
+            //setLoader(false);
+            setResponseEnglish(res?.data?.data);
+          } else {
+            console.log("Data Fetching Failed!");
+          }
+        });
 
-      // Create an object to store intensities for each publication date
-      const intensitiesByDate = {};
+        getUserResponseHindiAPI(user_id).then((res) => {
+          if (res.status === 200) {
+            //setLoader(false);
+            setResponseHindi(res?.data?.data);
+          } else {
+            console.log("Data Fetching Failed!");
+          }
+        });
 
-      // Initialize intensitiesByDate with zeros
-      uniquePublicationDates.forEach(date => {
-        intensitiesByDate[date] = 0;
-      });
-
-      // Accumulate intensities for each publication date
-      data1.forEach((item) => {
-        intensitiesByDate[item.published] += item.intensity;
-      });
-
-      const newChart = new Chart(ctx, {
-        type: "doughnut",
-        data: {
-          labels: uniquePublicationDates,
-          datasets: [
-            {
-              label: "Total Intensity",
-              data: uniquePublicationDates.map(date => intensitiesByDate[date]),
-              backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(255, 99, 132, 0.2)', 'rgba(255, 205, 86, 0.2)'],
-              borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)', 'rgba(255, 205, 86, 1)'],
-              borderWidth: 1,
-            },
-          ],
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true,
-            },
-          },
-        },
-      });
-
-      setChartInstance(newChart);
+        getUserResponseFrenchAPI(user_id).then((res) => {
+          if (res.status === 200) {
+            //setLoader(false);
+            setResponseFrench(res?.data?.data);
+          } else {
+            console.log("Data Fetching Failed!");
+          }
+        });
+      };
+      getUserResponseFunc(user_id);
     }
-  }, [data1]);
+  }, [user_id]);
+
+  //console.log(response);
+
+  const [englishWidth, setEnglishWidth] = useState(data?.englishScore);
+  const [hindiWidth, setHindiWidth] = useState(data?.hindiScore);
+  const [frenchWidth, setFrenchWidth] = useState(data?.frenchScore);
+
+  const [englishPercentage, setEnglishPercentage] = useState(0);
+  const [hindiPercentage, setHindiPercentage] = useState(0);
+  const [frenchPercentage, setFrenchPercentage] = useState(0);
+
+  useEffect(() => {
+    const engper =
+      (Number(englishWidth) /
+        (Number(englishWidth) + Number(hindiWidth) + Number(frenchWidth))) *
+      100;
+    const hinper =
+      (Number(hindiWidth) /
+        (Number(englishWidth) + Number(hindiWidth) + Number(frenchWidth))) *
+      100;
+    const ferper =
+      (Number(frenchWidth) /
+        (Number(englishWidth) + Number(hindiWidth) + Number(frenchWidth))) *
+      100;
+    setEnglishPercentage(`${engper}%`);
+    setHindiPercentage(`${hinper}%`);
+
+    setFrenchPercentage(`${ferper}%`);
+  }, [englishWidth, hindiWidth, frenchWidth]);
 
   return (
-    <div className="relative bg-white rounded-lg shadow dark:bg-gray-700 p-5">
-      <canvas ref={chartRef}></canvas>
-    </div>
+    <>
+      <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <div className="flex flex-col items-center justify-center p-6 space-x-0 rounded-b dark:border-gray-600 ">
+          <div className="relative w-full">
+            <div className="px-4 sm:px-0 pb-2">
+              <h3 className="text-base font-semibold leading-7 text-gray-900">
+                Progress Report
+              </h3>
+            </div>
+          </div>
+
+          {Number(englishWidth) + Number(hindiWidth) + Number(frenchWidth) ===
+          0 ? (
+            <p className="text-base leading-7 text-gray-900">No Game Played!</p>
+          ) : (
+            <>
+              <div className="w-full">
+                <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
+                  Language Stats
+                </p>
+                <div className="overflow-hidden h-4 text-xs flex rounded w-full">
+                  <div
+                    style={{ width: englishPercentage }}
+                    //style={{ width: "65%" }}
+                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-orange-500"
+                  ></div>
+                  <div
+                    style={{ width: hindiPercentage }}
+                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"
+                  ></div>
+                  <div
+                    style={{ width: frenchPercentage }}
+                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-500"
+                  ></div>
+                </div>
+                <div className="flex flex-wrap m-0">
+                  <div className="flex items-center m-1">
+                    <span className="flex w-3 h-3 m-1 bg-orange-500 rounded-full"></span>{" "}
+                    <p>English({englishPercentage})</p>
+                  </div>
+                  <div className="flex items-center m-1">
+                    <span className="flex w-3 h-3 m-1 bg-blue-600 rounded-full"></span>{" "}
+                    <p>Hindi({hindiPercentage})</p>
+                  </div>
+                  <div className="flex items-center m-1">
+                    <span className="flex w-3 h-3 m-1 bg-green-500 rounded-full"></span>{" "}
+                    <p>French({frenchPercentage})</p>
+                  </div>
+                </div>
+              </div>
+              <br />
+              <div className="w-full">
+                <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
+                  English Language Stats
+                </p>
+                <div className="overflow-hidden h-4 text-xs flex rounded w-full">
+                  <div
+                    style={{ width: responseEnglish?.totalIncorrectPercentage }}
+                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
+                  ></div>
+                  <div
+                    style={{ width: responseEnglish?.totalCorrectPercentage }}
+                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-500"
+                  ></div>
+                </div>
+                <div className="flex flex-wrap m-0">
+                  <div className="flex items-center m-1">
+                    <span className="flex w-3 h-3 m-1 bg-red-500 rounded-full"></span>{" "}
+                    <p>Wrong({responseEnglish?.totalIncorrectPercentage})</p>
+                  </div>
+                  <div className="flex items-center m-1">
+                    <span className="flex w-3 h-3 m-1 bg-green-500 rounded-full"></span>{" "}
+                    <p>Correct({responseEnglish?.totalCorrectPercentage})</p>
+                  </div>
+                </div>
+              </div>
+              <br />
+              <div className="w-full">
+                <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
+                  Hindi Language Stats
+                </p>
+                <div className="overflow-hidden h-4 text-xs flex rounded w-full">
+                  <div
+                    style={{ width: "25%" }}
+                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
+                  ></div>
+                  <div
+                    style={{ width: "75%" }}
+                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-500"
+                  ></div>
+                </div>
+                <div className="flex flex-wrap m-0">
+                  <div className="flex items-center m-1">
+                    <span className="flex w-3 h-3 m-1 bg-red-500 rounded-full"></span>{" "}
+                    <p>Wrong(70%)</p>
+                  </div>
+                  <div className="flex items-center m-1">
+                    <span className="flex w-3 h-3 m-1 bg-green-500 rounded-full"></span>{" "}
+                    <p>Correct(56%)</p>
+                  </div>
+                </div>
+              </div>
+              <br />
+              <div className="w-full">
+                <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
+                  french Language Stats
+                </p>
+                <div className="overflow-hidden h-4 text-xs flex rounded w-full">
+                  <div
+                    style={{ width: "25%" }}
+                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
+                  ></div>
+                  <div
+                    style={{ width: "75%" }}
+                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-500"
+                  ></div>
+                </div>
+                <div className="flex flex-wrap m-0">
+                  <div className="flex items-center m-1">
+                    <span className="flex w-3 h-3 m-1 bg-red-500 rounded-full"></span>{" "}
+                    <p>Wrong(70%)</p>
+                  </div>
+                  <div className="flex items-center m-1">
+                    <span className="flex w-3 h-3 m-1 bg-green-500 rounded-full"></span>{" "}
+                    <p>Correct(56%)</p>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </>
   );
 }
 

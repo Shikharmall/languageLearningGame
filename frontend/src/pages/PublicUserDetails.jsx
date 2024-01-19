@@ -74,11 +74,6 @@ const UserDetails = () => {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const [searchModalOpen, setSearchModalOpen] = useState(false);
-
-  const [memberdetaill, setMemberdetaill] = useState("");
-  const [imgcontent, setImagecontent] = useState();
-
   return (
     <>
       <div className="flex h-screen overflow-hidden">
@@ -144,51 +139,6 @@ const UserDetails = () => {
                       </ul>
                       <br />
                     </div>
-
-                    <br />
-
-                    <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                      <div className="flex flex-col items-center justify-center p-6 space-x-0 rounded-b dark:border-gray-600 ">
-                        <div className="relative w-full">
-                          <div className="px-4 sm:px-0 pb-2">
-                            <h3 className="text-base font-semibold leading-7 text-gray-900">
-                              Status
-                            </h3>
-                            <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-                              Dimension
-                            </p>
-                          </div>
-                          <div className="overflow-hidden h-4 text-xs flex rounded w-full">
-                            <div
-                              style={{ width: "25%" }}
-                              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
-                            ></div>
-                            <div
-                              style={{ width: "75%" }}
-                              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"
-                            ></div>
-                            <div
-                              style={{ width: "25%" }}
-                              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-500"
-                            ></div>
-                          </div>
-                        </div>
-                        <div className="flex flex-wrap m-0">
-                          <div className="flex items-center m-1">
-                            <span className="flex w-3 h-3 m-1 bg-red-500 rounded-full"></span>{" "}
-                            <p>Easy(56%)</p>
-                          </div>
-                          <div className="flex items-center m-1">
-                            <span className="flex w-3 h-3 m-1 bg-blue-600 rounded-full"></span>{" "}
-                            <p>Medium(70%)</p>
-                          </div>
-                          <div className="flex items-center m-1">
-                            <span className="flex w-3 h-3 m-1 bg-green-500 rounded-full"></span>{" "}
-                            <p>Hard(56%)</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
                   </div>
 
                   <div className="p-2 w-4/6" id="changeflex1">
@@ -244,54 +194,6 @@ const UserDetails = () => {
                     <br />
 
                     <Progress data={data}/>
-
-                    {/*<div className="relative bg-white rounded-lg shadow dark:bg-gray-700 p-5">
-                      <div className="flex flex-row">
-                        <div className="px-4 sm:px-0">
-                          <h3 className="text-base font-semibold leading-7 text-gray-900">
-                            Progress
-                          </h3>
-                          <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-                            All details
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="mt-6 border-t border-gray-100">
-                        <dl className="divide-y divide-gray-100">
-                          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 text-gray-900">
-                              Name
-                            </dt>
-                            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                              {data?.name}
-                            </dd>
-                          </div>
-                          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 text-gray-900">
-                              Email address
-                            </dt>
-                            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                              {data?.email}
-                            </dd>
-                          </div>
-                          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 text-gray-900">
-                              Total Score
-                            </dt>
-                            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                              {Number(data?.englishScore) +
-                                Number(data?.hindiScore) +
-                                Number(data?.frenchScore)}{" "}
-                              points{" "}
-                              <span className="text-blue-700">
-                                (including all languages)
-                              </span>
-                            </dd>
-                          </div>
-                        </dl>
-                      </div>
-                    </div>*/}
                   </div>
                 </div>
               )}

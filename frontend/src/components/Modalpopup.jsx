@@ -178,7 +178,7 @@ function ModalSearch({ id, modalOpen, setModalOpen, language }) {
       hardCorrect: hardCorrect,
       hardIncorrect: hardIncorrect,
     }));
-    addResponseToUserAPI(formData).then((res) => {
+    /*addResponseToUserAPI(formData).then((res) => {
       if (res.status === 201) {
         setLoader(false);
         localStorage.setItem("score", 0);
@@ -187,6 +187,19 @@ function ModalSearch({ id, modalOpen, setModalOpen, language }) {
         console.log("Data Update Failed!");
         console.log(res);
       }
+    });*/
+
+    setFormData((updatedFormData) => {
+      addResponseToUserAPI(updatedFormData).then((res) => {
+        if (res.status === 201) {
+          setLoader(false);
+          localStorage.setItem("score", 0);
+          setModalOpen(false);
+        } else {
+          console.log("Data Update Failed!");
+          console.log(res);
+        }
+      });
     });
   };
 

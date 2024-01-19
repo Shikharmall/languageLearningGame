@@ -38,4 +38,23 @@ user_route.get(
 
 user_route.patch("/updateQuestion", questionController.updateQuestion);
 
+user_route.get("/getUserResponse", responseController.getUserResponse);
+
+user_route.get(
+  "/getUserResponseEnglish",
+  responseController.getUserResponseEnglish
+);
+
+user_route.get(
+  "/getUserResponseHindi",
+  responseController.getUserResponseHindi
+);
+
+user_route.get(
+  "/getUserResponseFrench",
+  responseController.getUserResponseFrench
+);
+
+user_route.patch("/resetProgress", responseController.resetProgress);
+
 module.exports = user_route;

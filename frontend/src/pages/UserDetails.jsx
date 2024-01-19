@@ -4,6 +4,7 @@ import Header from "../partials/Header";
 import { Audio } from "react-loader-spinner";
 import img2 from "../images/userr.png";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import {
   getAllUserDetailsByLanguageAPI,
   getUserDetailsAPI,
@@ -11,6 +12,7 @@ import {
 import "../css/default.css";
 import UserInformation from "../components/UserInformation";
 import Progress from "../components/Progress";
+import { resetProgressAPI } from "../Api/ResponseAPI/ResponseAPI";
 
 const UserDetails = () => {
   const navigate = useNavigate();
@@ -30,55 +32,65 @@ const UserDetails = () => {
 
   const [loader, setLoader] = useState(true);
 
+  const getUserDetailsFunc = (user_id) => {
+    //setLoader(true);
+    getUserDetailsAPI(user_id).then((res) => {
+      if (res.status === 200) {
+        //setLoader(false);
+        setData(res?.data?.data);
+      } else {
+        console.log("Data Fetching Failed!");
+      }
+    });
+  };
   useEffect(() => {
-    const getUserDetailsFunc = (user_id) => {
-      //setLoader(true);
-      getUserDetailsAPI(user_id).then((res) => {
-        if (res.status === 200) {
-          //setLoader(false);
-          setData(res?.data?.data);
-        } else {
-          console.log("Data Fetching Failed!");
-        }
-      });
-    };
     getUserDetailsFunc(user_id);
   }, [user_id]);
 
   const [userData, setUserData] = useState([]);
 
+  const getAllUsersDetailsFunc = () => {
+    //setLoader(true);
+    getAllUserDetailsByLanguageAPI("all").then((res) => {
+      if (res.status === 200) {
+        setUserData(res?.data?.data);
+        let rank = 0;
+        userData.forEach(function (obj) {
+          if (obj._id === data._id) {
+            setRank(rank + 1);
+            setLoader(false);
+            return;
+          } else {
+            rank = Number(rank) + 1;
+          }
+        });
+      } else {
+        console.log("Data Fetching Failed!");
+      }
+    });
+  };
+
   useEffect(() => {
-    const getAllUsersDetailsFunc = () => {
-      getAllUserDetailsByLanguageAPI("all").then((res) => {
-        if (res.status === 200) {
-          setUserData(res?.data?.data);
-          let rank = 0;
-          userData.forEach(function (obj) {
-            if (obj._id === data._id) {
-              setRank(rank + 1);
-              setLoader(false);
-              return;
-            } else {
-              rank = Number(rank) + 1;
-            }
-          });
-        } else {
-          console.log("Data Fetching Failed!");
-        }
-      });
-    };
     getAllUsersDetailsFunc();
   }, [userData, data._id]);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const [searchModalOpen, setSearchModalOpen] = useState(false);
-
-  const [memberdetaill, setMemberdetaill] = useState("");
-  const [imgcontent, setImagecontent] = useState();
+  const resetProgressFunc = () => {
+    resetProgressAPI(data._id).then((res) => {
+      if (res.status === 201) {
+        getUserDetailsFunc(data._id);
+        getAllUsersDetailsFunc();
+        toast("Progress Reset!");
+      } else {
+        console.log("Data Fetching Failed!");
+      }
+    });
+  };
 
   return (
     <>
+      <ToastContainer></ToastContainer>
       <div className="flex h-screen overflow-hidden">
         {/*<ToastContainer></ToastContainer>*/}
         {/* Sidebar */}
@@ -149,44 +161,15 @@ const UserDetails = () => {
 
                   <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
                     <div className="flex flex-col items-center justify-center p-6 space-x-0 rounded-b dark:border-gray-600 ">
-                      <div className="relative w-full">
-                        <div className="px-4 sm:px-0 pb-2">
-                          <h3 className="text-base font-semibold leading-7 text-gray-900">
-                            Status
-                          </h3>
-                          <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-                            Dimension
-                          </p>
-                        </div>
-                        <div className="overflow-hidden h-4 text-xs flex rounded w-full">
-                          <div
-                            style={{ width: "25%" }}
-                            className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
-                          ></div>
-                          <div
-                            style={{ width: "75%" }}
-                            className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"
-                          ></div>
-                          <div
-                            style={{ width: "25%" }}
-                            className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-500"
-                          ></div>
-                        </div>
-                      </div>
-                      <div className="flex flex-wrap m-0">
-                        <div className="flex items-center m-1">
-                          <span className="flex w-3 h-3 m-1 bg-red-500 rounded-full"></span>{" "}
-                          <p>Easy(56%)</p>
-                        </div>
-                        <div className="flex items-center m-1">
-                          <span className="flex w-3 h-3 m-1 bg-blue-600 rounded-full"></span>{" "}
-                          <p>Medium(70%)</p>
-                        </div>
-                        <div className="flex items-center m-1">
-                          <span className="flex w-3 h-3 m-1 bg-green-500 rounded-full"></span>{" "}
-                          <p>Hard(56%)</p>
-                        </div>
-                      </div>
+                      <>
+                        <button
+                          type="submit"
+                          className="text-white bg-blue-700 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                          onClick={resetProgressFunc}
+                        >
+                          Reset Progress
+                        </button>
+                      </>
                     </div>
                   </div>
                 </div>

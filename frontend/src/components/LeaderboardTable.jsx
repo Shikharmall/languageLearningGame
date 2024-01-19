@@ -149,8 +149,6 @@ const LeaderboardTable = () => {
     })
     .slice(indexOfFirstPost, indexOfLastPost);
 
-  console.log(filteredUserData);
-
   return (
     <div className="relative sm:rounded-lg p-3 w-full h-full" id="movetop">
       {action ? (
