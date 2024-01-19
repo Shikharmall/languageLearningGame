@@ -98,7 +98,7 @@ export default function Login() {
                   />
                 </div>
 
-                <div className="flex items-center justify-between">
+                {/*<div className="flex items-center justify-between">
                   <div className="flex items-start">
                     <div className="flex items-center h-5">
                       <input
@@ -123,7 +123,7 @@ export default function Login() {
                   >
                     Forgot password?
                   </a>
-                </div>
+                </div>*/}
 
                 <button
                   onClick={submitHandler}
