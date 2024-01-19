@@ -1,4 +1,4 @@
-# Language Learning Game
+# Language Learning Game (Responsive)
 
 ## Frontend-
     Technologies Used - ReactJS, Vite, Tailwind CSS
