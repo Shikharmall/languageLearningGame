@@ -40,9 +40,9 @@ const getQuestion = async (req, res) => {
 
     let level = "easy";
 
-    if (score > 7 && score <= 14) {
+    if (score > 7 && score <= 22) {
       level = "moderate";
-    } else if (score > 14) {
+    } else if (score > 22) {
       level = "hard";
     }
     const count = await Question.countDocuments({
