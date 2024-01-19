@@ -6,38 +6,12 @@ import { getQuestionAPI } from "../Api/QuestionAPI/QuestionAPI";
 import { addResponseToUserAPI } from "../Api/ResponseAPI/ResponseAPI";
 
 function ModalSearch({ id, modalOpen, setModalOpen, language }) {
-  /*const modalContent = useRef(null);
-  const searchInput = useRef(null);
-
-  // close on click outside
-  useEffect(() => {
-    const clickHandler = ({ target }) => {
-      if (!modalOpen || modalContent.current.contains(target)) return;
-      setModalOpen(false);
-    };
-    document.addEventListener("click", clickHandler);
-    return () => document.removeEventListener("click", clickHandler);
-  });
-
-  // close if the esc key is pressed
-  useEffect(() => {
-    const keyHandler = ({ keyCode }) => {
-      if (!modalOpen || keyCode !== 27) return;
-      setModalOpen(false);
-    };
-    document.addEventListener("keydown", keyHandler);
-    return () => document.removeEventListener("keydown", keyHandler);
-  });
-
-  useEffect(() => {
-    modalOpen && searchInput.current.focus();
-  }, [modalOpen]);*/
-
   const [questionData, setQuestionData] = useState("");
   const [isAnswered, setIsAnswered] = useState(false);
   const [loader, setLoader] = useState(true);
   const [questionPoint, setQuestionPoint] = useState(0);
-  const [loader1, setLoader1] = useState(false);
+
+  const [selectedOption, setSelectedOption] = useState(null);
 
   const getQuestionFunc = (language, score) => {
     setLoader(true);
@@ -144,10 +118,9 @@ function ModalSearch({ id, modalOpen, setModalOpen, language }) {
     }
 
     setIsAnswered(false);
+    setSelectedOption(null);
     getQuestionFunc(language, score);
   };
-
-  const [selectedOption, setSelectedOption] = useState(null);
 
   const handleOptionChange = (event) => {
     setIsAnswered(true);
@@ -189,8 +162,6 @@ function ModalSearch({ id, modalOpen, setModalOpen, language }) {
       });
     });
   };
-
-  console.log(formData);
 
   return (
     <>
