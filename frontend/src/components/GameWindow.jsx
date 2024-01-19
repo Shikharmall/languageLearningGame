@@ -122,6 +122,12 @@ function ModalSearch({ id, modalOpen, setModalOpen, language }) {
     getQuestionFunc(language, score);
   };
 
+  const [ranNumb, setRanNumb] = useState(1);
+
+  useEffect(() => {
+    setRanNumb(Math.floor(Math.random() * 4) + 1);
+  }, [loader]);
+
   const handleOptionChange = (event) => {
     setIsAnswered(true);
     setSelectedOption(event.target.value);
@@ -245,32 +251,38 @@ function ModalSearch({ id, modalOpen, setModalOpen, language }) {
                       <br />
 
                       <div className="leading-relaxed">
-                        <div className="flex items-center">
-                          {isAnswered ? (
-                            <input
-                              type="radio"
-                              value={questionData?.option1}
-                              checked={selectedOption === questionData?.option1}
-                              onChange={handleOptionChange}
+                        {ranNumb === 1 ? (
+                          <div className="flex items-center">
+                            {isAnswered ? (
+                              <input
+                                type="radio"
+                                value={questionData?.option1}
+                                checked={
+                                  selectedOption === questionData?.option1
+                                }
+                                onChange={handleOptionChange}
+                                className="m-1"
+                                disabled
+                              />
+                            ) : (
+                              <input
+                                type="radio"
+                                value={questionData?.option1}
+                                checked={
+                                  selectedOption === questionData?.option1
+                                }
+                                onChange={handleOptionChange}
+                                className="m-1"
+                              />
+                            )}
+                            <p
                               className="m-1"
-                              disabled
-                            />
-                          ) : (
-                            <input
-                              type="radio"
-                              value={questionData?.option1}
-                              checked={selectedOption === questionData?.option1}
-                              onChange={handleOptionChange}
-                              className="m-1"
-                            />
-                          )}
-                          <p
-                            className="m-1"
-                            style={{ opacity: isAnswered ? 1 : 0.5 }}
-                          >
-                            1. {questionData?.option1}
-                          </p>
-                        </div>
+                              style={{ opacity: isAnswered ? 1 : 0.5 }}
+                            >
+                              {questionData?.option1}
+                            </p>
+                          </div>
+                        ) : null}
                         <div className="flex items-center">
                           {isAnswered ? (
                             <input
@@ -294,9 +306,41 @@ function ModalSearch({ id, modalOpen, setModalOpen, language }) {
                             className="m-1"
                             style={{ opacity: isAnswered ? 1 : 0.5 }}
                           >
-                            2. {questionData?.option2}
+                            {questionData?.option2}
                           </p>
                         </div>
+                        {ranNumb === 2 ? (
+                          <div className="flex items-center">
+                            {isAnswered ? (
+                              <input
+                                type="radio"
+                                value={questionData?.option1}
+                                checked={
+                                  selectedOption === questionData?.option1
+                                }
+                                onChange={handleOptionChange}
+                                className="m-1"
+                                disabled
+                              />
+                            ) : (
+                              <input
+                                type="radio"
+                                value={questionData?.option1}
+                                checked={
+                                  selectedOption === questionData?.option1
+                                }
+                                onChange={handleOptionChange}
+                                className="m-1"
+                              />
+                            )}
+                            <p
+                              className="m-1"
+                              style={{ opacity: isAnswered ? 1 : 0.5 }}
+                            >
+                              {questionData?.option1}
+                            </p>
+                          </div>
+                        ) : null}
                         <div className="flex items-center">
                           {isAnswered ? (
                             <input
@@ -320,9 +364,41 @@ function ModalSearch({ id, modalOpen, setModalOpen, language }) {
                             className="m-1"
                             style={{ opacity: isAnswered ? 1 : 0.5 }}
                           >
-                            3. {questionData?.option3}
+                            {questionData?.option3}
                           </p>
                         </div>
+                        {ranNumb === 3 ? (
+                          <div className="flex items-center">
+                            {isAnswered ? (
+                              <input
+                                type="radio"
+                                value={questionData?.option1}
+                                checked={
+                                  selectedOption === questionData?.option1
+                                }
+                                onChange={handleOptionChange}
+                                className="m-1"
+                                disabled
+                              />
+                            ) : (
+                              <input
+                                type="radio"
+                                value={questionData?.option1}
+                                checked={
+                                  selectedOption === questionData?.option1
+                                }
+                                onChange={handleOptionChange}
+                                className="m-1"
+                              />
+                            )}
+                            <p
+                              className="m-1"
+                              style={{ opacity: isAnswered ? 1 : 0.5 }}
+                            >
+                              {questionData?.option1}
+                            </p>
+                          </div>
+                        ) : null}
                         <div className="flex items-center">
                           {isAnswered ? (
                             <input
@@ -348,9 +424,41 @@ function ModalSearch({ id, modalOpen, setModalOpen, language }) {
                             className="m-1"
                             style={{ opacity: isAnswered ? 1 : 0.5 }}
                           >
-                            4. {questionData?.option4}
+                            {questionData?.option4}
                           </p>
                         </div>
+                        {ranNumb === 4 ? (
+                          <div className="flex items-center">
+                            {isAnswered ? (
+                              <input
+                                type="radio"
+                                value={questionData?.option1}
+                                checked={
+                                  selectedOption === questionData?.option1
+                                }
+                                onChange={handleOptionChange}
+                                className="m-1"
+                                disabled
+                              />
+                            ) : (
+                              <input
+                                type="radio"
+                                value={questionData?.option1}
+                                checked={
+                                  selectedOption === questionData?.option1
+                                }
+                                onChange={handleOptionChange}
+                                className="m-1"
+                              />
+                            )}
+                            <p
+                              className="m-1"
+                              style={{ opacity: isAnswered ? 1 : 0.5 }}
+                            >
+                              {questionData?.option1}
+                            </p>
+                          </div>
+                        ) : null}
                       </div>
                       {isAnswered ? (
                         <>
