@@ -8,7 +8,7 @@
       2.npm install
       3.set environment variables(VITE_ENV = "LOCAL")
       4.npm run dev
-    Link Deployed - [https://analyticdashboard-ten.vercel.app/](https://language-learning-game-five.vercel.app/)
+    Link Deployed - https://language-learning-game-five.vercel.app/
     
 
 ## Backend-
