@@ -1,5 +1,7 @@
 const Question = require("../../models/Question/questionModel");
 
+//add question by dd admin
+
 const addQuestion = async (req, res) => {
   try {
     const { questions } = req.body;
@@ -33,6 +35,8 @@ const addQuestion = async (req, res) => {
     res.status(500).json({ status: "failed", message: error.message });
   }
 };
+
+//get a question in game
 
 const getQuestion = async (req, res) => {
   try {
@@ -111,6 +115,8 @@ const getQuestion = async (req, res) => {
   }
 };
 
+//get all questions 
+
 const getAllQuestions = async (req, res) => {
   try {
     const { language, level } = req.query;
@@ -132,6 +138,8 @@ const getAllQuestions = async (req, res) => {
   }
 };
 
+//get question by ID
+
 const getQuestionByID = async (req, res) => {
   try {
     const { question_id } = req.query;
@@ -143,6 +151,8 @@ const getQuestionByID = async (req, res) => {
     res.status(500).json({ status: "failed", message: error.message });
   }
 };
+
+//upadte question by ID
 
 const updateQuestion = async (req, res) => {
   try {

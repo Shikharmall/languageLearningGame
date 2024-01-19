@@ -4,6 +4,8 @@ const { validationResult } = require("express-validator");
 
 const bcrypt = require("bcrypt");
 
+//bcrypting the password
+
 const securePasswordGenerate = async (password) => {
   try {
     const passwordhash = bcrypt.hash(password, 10);
@@ -12,6 +14,8 @@ const securePasswordGenerate = async (password) => {
     console.log(error.message);
   }
 };
+
+//registering the user
 
 const registerUser = async (req, res) => {
   try {
@@ -63,6 +67,8 @@ const registerUser = async (req, res) => {
   }
 };
 
+//logging the user to game dashboard
+
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -91,6 +97,8 @@ const loginUser = async (req, res) => {
     res.status(500).json({ status: "failed", message: error.message });
   }
 };
+
+//get user details
 
 const getUserDetails = async (req, res) => {
   try {
@@ -121,6 +129,8 @@ const getAllUserDetails = async (req, res) => {
     res.status(500).json({ status: "failed", message: error.message });
   }
 };
+
+//get all user details by language
 
 const getAllUserDetailsByLanguage = async (req, res) => {
   try {

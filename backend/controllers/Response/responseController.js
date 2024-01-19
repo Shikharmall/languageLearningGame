@@ -1,6 +1,8 @@
 const User = require("../../models/User/userModel");
 const Response = require("../../models/Response/responseModel");
 
+//calculate percentage
+
 const calculatePercentage = (total, value) => {
   if (total === 0) {
     return "0%";
@@ -8,6 +10,8 @@ const calculatePercentage = (total, value) => {
   const percentage = (value / total) * 100;
   return `${percentage.toFixed(0)}%`;
 };
+
+//adding user response to db
 
 const addResponseToUser = async (req, res) => {
   try {
@@ -92,6 +96,8 @@ const addResponseToUser = async (req, res) => {
   }
 };
 
+//fetching user response
+
 const getUserResponse = async (req, res) => {
   try {
     const { user_id } = req.query;
@@ -143,93 +149,7 @@ const getUserResponse = async (req, res) => {
   }
 };
 
-const getUserResponseByLanguage = async (req, res) => {
-  try {
-    const { user_id } = req.query;
-
-    const languages = ["english", "hindi", "french"];
-    const sumsArray = [];
-
-    for (const language of languages) {
-      const responseData = await Response.find({
-        user_id: user_id,
-        language: language,
-      });
-
-      const totalEasy = responseData.reduce(
-        (acc, val) => acc + val.easyCorrect + val.easyIncorrect,
-        0
-      );
-      const totalModerate = responseData.reduce(
-        (acc, val) => acc + val.moderateCorrect + val.moderateIncorrect,
-        0
-      );
-      const totalHard = responseData.reduce(
-        (acc, val) => acc + val.hardCorrect + val.hardIncorrect,
-        0
-      );
-
-      const sumsObject = {
-        user_id: user_id,
-        language: language,
-        easyCorrect: responseData.reduce(
-          (acc, val) => acc + val.easyCorrect,
-          0
-        ),
-        easyIncorrect: responseData.reduce(
-          (acc, val) => acc + val.easyIncorrect,
-          0
-        ),
-        moderateCorrect: responseData.reduce(
-          (acc, val) => acc + val.moderateCorrect,
-          0
-        ),
-        moderateIncorrect: responseData.reduce(
-          (acc, val) => acc + val.moderateIncorrect,
-          0
-        ),
-        hardCorrect: responseData.reduce(
-          (acc, val) => acc + val.hardCorrect,
-          0
-        ),
-        hardIncorrect: responseData.reduce(
-          (acc, val) => acc + val.hardIncorrect,
-          0
-        ),
-        easyCorrectPercentage: calculatePercentage(
-          totalEasy,
-          sumsObject.easyCorrect
-        ),
-        easyIncorrectPercentage: calculatePercentage(
-          totalEasy,
-          sumsObject.easyIncorrect
-        ),
-        moderateCorrectPercentage: calculatePercentage(
-          totalModerate,
-          sumsObject.moderateCorrect
-        ),
-        moderateIncorrectPercentage: calculatePercentage(
-          totalModerate,
-          sumsObject.moderateIncorrect
-        ),
-        hardCorrectPercentage: calculatePercentage(
-          totalHard,
-          sumsObject.hardCorrect
-        ),
-        hardIncorrectPercentage: calculatePercentage(
-          totalHard,
-          sumsObject.hardIncorrect
-        ),
-      };
-
-      sumsArray.push(sumsObject);
-    }
-
-    return res.status(200).json({ status: "success", data: sumsArray });
-  } catch (error) {
-    res.status(500).json({ status: "failed", message: error.message });
-  }
-};
+//get user response for progress page in english
 
 const getUserResponseEnglish = async (req, res) => {
   try {
@@ -273,6 +193,8 @@ const getUserResponseEnglish = async (req, res) => {
   }
 };
 
+//get user response for progress page in hindi
+
 const getUserResponseHindi = async (req, res) => {
   try {
     const { user_id } = req.query;
@@ -315,6 +237,8 @@ const getUserResponseHindi = async (req, res) => {
   }
 };
 
+//get user response for progress page in french
+
 const getUserResponseFrench = async (req, res) => {
   try {
     const { user_id } = req.query;
@@ -356,6 +280,8 @@ const getUserResponseFrench = async (req, res) => {
     res.status(500).json({ status: "failed", message: error.message });
   }
 };
+
+//reset all progress 
 
 const resetProgress = async (req, res) => {
   try {
