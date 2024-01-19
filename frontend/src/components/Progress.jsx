@@ -7,7 +7,7 @@ import {
 } from "../Api/ResponseAPI/ResponseAPI";
 
 function Progress({ data }) {
-  const user_id = localStorage.getItem("user_id");
+  const user_id = data._id;
 
   const [response, setResponse] = useState("");
   const [responseEnglish, setResponseEnglish] = useState("");
@@ -58,7 +58,7 @@ function Progress({ data }) {
     }
   }, [user_id]);
 
-  //console.log(response);
+  console.log(responseEnglish);
 
   const [englishWidth, setEnglishWidth] = useState(data?.englishScore);
   const [hindiWidth, setHindiWidth] = useState(data?.hindiScore);
@@ -86,9 +86,6 @@ function Progress({ data }) {
 
     setFrenchPercentage(`${ferper}%`);
   }, [englishWidth, hindiWidth, frenchWidth]);
-
-
-  
 
   return (
     <>
@@ -174,22 +171,22 @@ function Progress({ data }) {
                 </p>
                 <div className="overflow-hidden h-4 text-xs flex rounded w-full">
                   <div
-                    style={{ width: "25%" }}
+                    style={{ width: responseHindi?.totalIncorrectPercentage }}
                     className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
                   ></div>
                   <div
-                    style={{ width: "75%" }}
+                    style={{ width: responseHindi?.totalCorrectPercentage }}
                     className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-500"
                   ></div>
                 </div>
                 <div className="flex flex-wrap m-0">
                   <div className="flex items-center m-1">
                     <span className="flex w-3 h-3 m-1 bg-red-500 rounded-full"></span>{" "}
-                    <p>Wrong(70%)</p>
+                    <p>Wrong({responseHindi?.totalIncorrectPercentage})</p>
                   </div>
                   <div className="flex items-center m-1">
                     <span className="flex w-3 h-3 m-1 bg-green-500 rounded-full"></span>{" "}
-                    <p>Correct(56%)</p>
+                    <p>Correct({responseHindi?.totalCorrectPercentage})</p>
                   </div>
                 </div>
               </div>
@@ -200,22 +197,22 @@ function Progress({ data }) {
                 </p>
                 <div className="overflow-hidden h-4 text-xs flex rounded w-full">
                   <div
-                    style={{ width: "25%" }}
+                    style={{ width: responseFrench?.totalIncorrectPercentage }}
                     className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
                   ></div>
                   <div
-                    style={{ width: "75%" }}
+                    style={{ width: responseFrench?.totalCorrectPercentage }}
                     className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-500"
                   ></div>
                 </div>
                 <div className="flex flex-wrap m-0">
                   <div className="flex items-center m-1">
                     <span className="flex w-3 h-3 m-1 bg-red-500 rounded-full"></span>{" "}
-                    <p>Wrong(70%)</p>
+                    <p>Wrong({responseFrench?.totalIncorrectPercentage})</p>
                   </div>
                   <div className="flex items-center m-1">
                     <span className="flex w-3 h-3 m-1 bg-green-500 rounded-full"></span>{" "}
-                    <p>Correct(56%)</p>
+                    <p>Correct({responseFrench?.totalCorrectPercentage})</p>
                   </div>
                 </div>
               </div>

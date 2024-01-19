@@ -89,6 +89,23 @@ const UserDetails = () => {
     });
   };
 
+  /*const resetProgressFunc = async () => {
+    try {
+      const res = await resetProgressAPI(data._id);
+      if (res.status === 201) {
+        await Promise.all([
+          getUserDetailsFunc(data._id),
+          getAllUsersDetailsFunc(),
+        ]);
+        toast("Progress Reset!");
+      } else {
+        console.error("Data Fetching Failed!");
+      }
+    } catch (error) {
+      console.error("Error resetting progress:", error.message);
+    }
+  };*/
+
   return (
     <>
       <ToastContainer></ToastContainer>

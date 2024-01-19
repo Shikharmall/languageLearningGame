@@ -6,7 +6,7 @@ const calculatePercentage = (total, value) => {
     return "0%";
   }
   const percentage = (value / total) * 100;
-  return `${percentage.toFixed(2)}%`;
+  return `${percentage.toFixed(0)}%`;
 };
 
 const addResponseToUser = async (req, res) => {

@@ -43,12 +43,9 @@ export const getUserResponseAPI = async (user_id) => {
 export const getUserResponseEnglishAPI = async (user_id) => {
   try {
     let result = await axios(
-      `${API_URL_BASE}/getUserResponse?user_id=${user_id}`,
+      `${API_URL_BASE}/getUserResponseEnglish?user_id=${user_id}`,
       {
-        method: "GET",
-        headers: {
-          //"Content-Type": "application/json",
-        },
+        method: "GET"
       }
     );
     return result;
