@@ -50,20 +50,9 @@ const UserDetails = () => {
   const [userData, setUserData] = useState([]);
 
   const getAllUsersDetailsFunc = () => {
-    //setLoader(true);
     getAllUserDetailsByLanguageAPI("all").then((res) => {
       if (res.status === 200) {
         setUserData(res?.data?.data);
-        let rank = 0;
-        userData.forEach(function (obj) {
-          if (obj._id === data._id) {
-            setRank(rank + 1);
-            setLoader(false);
-            return;
-          } else {
-            rank = Number(rank) + 1;
-          }
-        });
       } else {
         console.log("Data Fetching Failed!");
       }
@@ -72,6 +61,18 @@ const UserDetails = () => {
 
   useEffect(() => {
     getAllUsersDetailsFunc();
+  }, []);
+
+  useEffect(() => {
+    if (userData && data._id) {
+      const foundUser = userData.find((obj) => obj._id === data._id);
+
+      if (foundUser) {
+        const userRank = userData.indexOf(foundUser) + 1;
+        setRank(userRank);
+        setLoader(false);
+      }
+    }
   }, [userData, data._id]);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);

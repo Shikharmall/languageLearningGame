@@ -31,21 +31,6 @@ const UserDetails = () => {
 
   const [loader, setLoader] = useState(true);
 
-  /* useEffect(() => {
-    const getUserDetailsFunc = (user_id) => {
-      //setLoader(true);
-      getUserDetailsAPI(user_id).then((res) => {
-        if (res.status === 200) {
-          //setLoader(false);
-          setData(res?.data?.data);
-        } else {
-          console.log("Data Fetching Failed!");
-        }
-      });
-    };
-    getUserDetailsFunc(user_id);
-  }, [user_id]);*/
-
   const getUserDetailsFunc = async (userId) => {
     try {
       const res = await getUserDetailsAPI(userId);
@@ -63,39 +48,7 @@ const UserDetails = () => {
     getUserDetailsFunc(user_id);
   }, [user_id]);
 
-  console.log(data);
-
-  useEffect(() => {
-    console.log("Effect running...");
-    // Your code
-  }, [user_id]);
-
   const [userData, setUserData] = useState([]);
-
-  /*const getAllUsersDetailsFunc = () => {
-    getAllUserDetailsByLanguageAPI("all").then((res) => {
-      if (res.status === 200) {
-        setUserData(res?.data?.data);
-        let rank = 0;
-        userData.forEach(function (obj) {
-          if (obj._id === data._id) {
-            //break;
-            setRank(rank + 1);
-            setLoader(false);
-            return;
-          } else {
-            rank = Number(rank) + 1;
-          }
-        });
-      } else {
-        console.log("Data Fetching Failed!");
-      }
-    });
-  };
-
-  useEffect(() => {
-    getAllUsersDetailsFunc();
-  }, [userData, data._id]);*/
 
   const getAllUsersDetailsFunc = () => {
     getAllUserDetailsByLanguageAPI("all").then((res) => {
