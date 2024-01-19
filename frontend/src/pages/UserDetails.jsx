@@ -24,6 +24,7 @@ const UserDetails = () => {
     }
   }, []);
 
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const user_id = localStorage.getItem("user_id");
 
   const [data, setData] = useState("");
@@ -75,11 +76,12 @@ const UserDetails = () => {
     }
   }, [userData, data._id]);
 
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  console.log(data);
 
   const resetProgressFunc = () => {
     resetProgressAPI(data._id).then((res) => {
       if (res.status === 201) {
+        setLoader(true);
         getUserDetailsFunc(data._id);
         getAllUsersDetailsFunc();
         toast("Progress Reset!");

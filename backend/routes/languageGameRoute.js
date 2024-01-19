@@ -1,7 +1,7 @@
 var express = require("express");
 var user_route = express();
 
-const auth = require("../middleware/auth");
+const isDDAdmin = require("../middleware/isDDAdmin");
 
 const userController = require("../controllers/User/userController");
 const questionController = require("../controllers/Question/questionController");
