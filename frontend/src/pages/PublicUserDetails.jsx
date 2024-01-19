@@ -6,9 +6,12 @@ import img2 from "../images/userr.png";
 import "../css/default.css";
 import { useParams, useNavigate } from "react-router-dom";
 import {
+  getAllUserDetailsByLanguageAPI,
   getAllUsersDetailsAPI,
   getUserDetailsAPI,
 } from "../Api/UserAPI/UserAPI";
+import Progress from "../components/Progress";
+import UserInformation from "../components/UserInformation";
 
 const UserDetails = () => {
   const navigate = useNavigate();
@@ -47,14 +50,14 @@ const UserDetails = () => {
 
   useEffect(() => {
     const getAllUsersDetailsFunc = () => {
-      getAllUsersDetailsAPI().then((res) => {
+      getAllUserDetailsByLanguageAPI("all").then((res) => {
         if (res.status === 200) {
           setUserData(res?.data?.data);
           let rank = 0;
           userData.forEach(function (obj) {
             if (obj._id === data._id) {
               //break;
-              setRank(rank+1);
+              setRank(rank + 1);
               setLoader(false);
               return;
             } else {
@@ -119,24 +122,16 @@ const UserDetails = () => {
                           {data?.name}
                           <span className="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300 ml-2">
                             <span className="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
-                            Rank- #{rank}
+                            Global Rank- #{rank}
                           </span>
-                          {memberdetaill.role === "mdsAdmin" ? (
-                            <span className="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300 ml-2">
-                              <span className="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
-                              Hoa
-                            </span>
-                          ) : null}
                         </p>
                       </div>
-
                       <br />
-
                       <ul className="flex items-center justify-center">
-                        {memberdetaill.profileImg ? (
+                        {data?.image !== "N/A" ? (
                           <img
-                            src={memberdetaill.profileImg.url}
-                            alt={memberdetaill.profileImg.name}
+                            src={data?.image}
+                            alt="profile-pic"
                             className="w-60 h-60 rounded"
                           />
                         ) : (
@@ -147,7 +142,6 @@ const UserDetails = () => {
                           />
                         )}
                       </ul>
-
                       <br />
                     </div>
 
@@ -198,7 +192,7 @@ const UserDetails = () => {
                   </div>
 
                   <div className="p-2 w-4/6" id="changeflex1">
-                    <div className="relative bg-white rounded-lg shadow dark:bg-gray-700 p-5">
+                    {/*<div className="relative bg-white rounded-lg shadow dark:bg-gray-700 p-5">
                       <div className="flex flex-row">
                         <div className="px-4 sm:px-0">
                           <h3 className="text-base font-semibold leading-7 text-gray-900">
@@ -222,10 +216,55 @@ const UserDetails = () => {
                           </div>
                           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                             <dt className="text-sm font-medium leading-6 text-gray-900">
-                              Phone Number
+                              Email address
                             </dt>
                             <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                              -
+                              {data?.email}
+                            </dd>
+                          </div>
+                          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                            <dt className="text-sm font-medium leading-6 text-gray-900">
+                              Total Score
+                            </dt>
+                            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                              {Number(data?.englishScore) +
+                                Number(data?.hindiScore) +
+                                Number(data?.frenchScore)}{" "}
+                              points{" "}
+                              <span className="text-blue-700">
+                                (including all languages)
+                              </span>
+                            </dd>
+                          </div>
+                        </dl>
+                      </div>
+                    </div>*/}
+                    <UserInformation data={data}/>
+
+                    <br />
+
+                    <Progress data={data}/>
+
+                    {/*<div className="relative bg-white rounded-lg shadow dark:bg-gray-700 p-5">
+                      <div className="flex flex-row">
+                        <div className="px-4 sm:px-0">
+                          <h3 className="text-base font-semibold leading-7 text-gray-900">
+                            Progress
+                          </h3>
+                          <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
+                            All details
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="mt-6 border-t border-gray-100">
+                        <dl className="divide-y divide-gray-100">
+                          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                            <dt className="text-sm font-medium leading-6 text-gray-900">
+                              Name
+                            </dt>
+                            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                              {data?.name}
                             </dd>
                           </div>
                           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -241,234 +280,18 @@ const UserDetails = () => {
                               Total Score
                             </dt>
                             <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                              {data?.score} points
-                            </dd>
-                          </div>
-                          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 text-gray-900">
-                              Attachments
-                            </dt>
-                            <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                              <ul
-                                role="list"
-                                className="divide-y divide-gray-100 rounded-md border border-gray-200"
-                              >
-                                {memberdetaill.headDocuments &&
-                                memberdetaill.headDocuments.length > 0 ? (
-                                  memberdetaill.headDocuments.map(
-                                    (value, index) => (
-                                      <li
-                                        className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6"
-                                        key={index}
-                                      >
-                                        {/*documentSizes[value.document_url]*/}
-                                        {value.document_type ===
-                                        "aadhar_card" ? (
-                                          <>
-                                            <div className="flex w-0 flex-1 items-center">
-                                              <svg
-                                                className="h-5 w-5 flex-shrink-0 text-gray-400"
-                                                viewBox="0 0 20 20"
-                                                fill="currentColor"
-                                                aria-hidden="true"
-                                              >
-                                                <path
-                                                  fillRule="evenodd"
-                                                  d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z"
-                                                  clipRule="evenodd"
-                                                />
-                                              </svg>
-                                              <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                                                <span className="truncate font-medium">
-                                                  Aadhar Card
-                                                </span>
-                                                {/*<span className="flex-shrink-0 text-gray-400">
-                                                    2.4mb
-                                                  </span>*/}
-                                              </div>
-                                            </div>
-
-                                            <div className="ml-4 flex-shrink-0">
-                                              <a
-                                                className="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer"
-                                                onClick={(e) => {
-                                                  e.stopPropagation();
-                                                  setSearchModalOpen(true);
-                                                  setImagecontent(
-                                                    value.document_url
-                                                  );
-                                                }}
-                                              >
-                                                View Documents
-                                              </a>
-                                            </div>
-                                          </>
-                                        ) : null}
-                                        {value.document_type === "pan_card" ? (
-                                          <>
-                                            <div className="flex w-0 flex-1 items-center">
-                                              <svg
-                                                className="h-5 w-5 flex-shrink-0 text-gray-400"
-                                                viewBox="0 0 20 20"
-                                                fill="currentColor"
-                                                aria-hidden="true"
-                                              >
-                                                <path
-                                                  fillRule="evenodd"
-                                                  d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z"
-                                                  clipRule="evenodd"
-                                                />
-                                              </svg>
-                                              <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                                                <span className="truncate font-medium">
-                                                  Pan Card
-                                                </span>
-                                                {/*<span className="flex-shrink-0 text-gray-400">
-                                                    2.4mb
-                                                  </span>*/}
-                                              </div>
-                                            </div>
-
-                                            <div className="ml-4 flex-shrink-0">
-                                              <a
-                                                className="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer"
-                                                onClick={(e) => {
-                                                  e.stopPropagation();
-                                                  setSearchModalOpen(true);
-                                                  setImagecontent(
-                                                    value.document_url
-                                                  );
-                                                }}
-                                              >
-                                                View Documents
-                                              </a>
-                                            </div>
-                                          </>
-                                        ) : null}
-                                        {value.document_type ===
-                                        "utility_bill" ? (
-                                          <>
-                                            <div className="flex w-0 flex-1 items-center">
-                                              <svg
-                                                className="h-5 w-5 flex-shrink-0 text-gray-400"
-                                                viewBox="0 0 20 20"
-                                                fill="currentColor"
-                                                aria-hidden="true"
-                                              >
-                                                <path
-                                                  fillRule="evenodd"
-                                                  d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z"
-                                                  clipRule="evenodd"
-                                                />
-                                              </svg>
-                                              <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                                                <span className="truncate font-medium">
-                                                  Utility Bill
-                                                </span>
-                                                {/*<span className="flex-shrink-0 text-gray-400">
-                                                    2.4mb
-                                                  </span>*/}
-                                              </div>
-                                            </div>
-
-                                            <div className="ml-4 flex-shrink-0">
-                                              <a
-                                                className="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer"
-                                                onClick={(e) => {
-                                                  e.stopPropagation();
-                                                  setSearchModalOpen(true);
-                                                  setImagecontent(
-                                                    value.document_url
-                                                  );
-                                                }}
-                                              >
-                                                View Documents
-                                              </a>
-                                            </div>
-                                          </>
-                                        ) : null}
-                                        {value.document_type ===
-                                        "proof_of_hoa" ? (
-                                          <>
-                                            <div className="flex w-0 flex-1 items-center">
-                                              <svg
-                                                className="h-5 w-5 flex-shrink-0 text-gray-400"
-                                                viewBox="0 0 20 20"
-                                                fill="currentColor"
-                                                aria-hidden="true"
-                                              >
-                                                <path
-                                                  fillRule="evenodd"
-                                                  d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z"
-                                                  clipRule="evenodd"
-                                                />
-                                              </svg>
-                                              <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                                                <span className="truncate font-medium">
-                                                  Proof Of Hoa
-                                                </span>
-                                                {/*<span className="flex-shrink-0 text-gray-400">
-                                                    2.4mb
-                                                  </span>*/}
-                                              </div>
-                                            </div>
-
-                                            <div className="ml-4 flex-shrink-0">
-                                              <a
-                                                className="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer"
-                                                onClick={(e) => {
-                                                  e.stopPropagation();
-                                                  setSearchModalOpen(true);
-                                                  setImagecontent(
-                                                    value.document_url
-                                                  );
-                                                }}
-                                              >
-                                                View Documents
-                                              </a>
-                                            </div>
-                                          </>
-                                        ) : null}
-                                      </li>
-                                    )
-                                  )
-                                ) : (
-                                  <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-                                    <div className="flex w-0 flex-1 items-center">
-                                      <svg
-                                        className="h-5 w-5 flex-shrink-0 text-gray-400"
-                                        viewBox="0 0 20 20"
-                                        fill="currentColor"
-                                        aria-hidden="true"
-                                      >
-                                        <path
-                                          fillRule="evenodd"
-                                          d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z"
-                                          clipRule="evenodd"
-                                        />
-                                      </svg>
-                                      <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                                        <span className="truncate font-medium">
-                                          No Documents
-                                        </span>
-                                        <span className="flex-shrink-0 text-gray-400">
-                                          0.0mb
-                                        </span>
-                                      </div>
-                                    </div>
-                                    <div className="ml-4 flex-shrink-0">
-                                      <a className="font-medium text-indigo-600 hover:text-indigo-500">
-                                        View Document
-                                      </a>
-                                    </div>
-                                  </li>
-                                )}
-                              </ul>
+                              {Number(data?.englishScore) +
+                                Number(data?.hindiScore) +
+                                Number(data?.frenchScore)}{" "}
+                              points{" "}
+                              <span className="text-blue-700">
+                                (including all languages)
+                              </span>
                             </dd>
                           </div>
                         </dl>
                       </div>
-                    </div>
+                    </div>*/}
                   </div>
                 </div>
               )}

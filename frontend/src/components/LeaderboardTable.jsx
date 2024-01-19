@@ -14,19 +14,15 @@ const LeaderboardTable = () => {
 
   const [loader, setLoader] = useState(true);
   const [language, setLanguage] = useState("all");
-  const [level, setLevel] = useState("all");
 
   const handleLanguageChange = (e) => {
     setLanguage(e.target.value);
-  };
-
-  const handleLevelChange = (e) => {
-    setLevel(e.target.value);
+    paginate(1);
   };
 
   useEffect(() => {
     const getAllUsersDetailsFunc = (language) => {
-      //setLoader(true);
+      setLoader(true);
       getAllUserDetailsByLanguageAPI(language).then((res) => {
         if (res.status === 200) {
           setLoader(false);
@@ -54,6 +50,7 @@ const LeaderboardTable = () => {
   }
 
   const handleSelectChangerow = (e) => {
+    paginate(1);
     setPostsPerPage(e.target.value);
   };
 

@@ -4,6 +4,7 @@ import { API_URL_BASE } from "../../utils/apiURL";
 // API to update score
 
 export const addResponseToUserAPI = async (data) => {
+  console.log(data);
   try {
     let result = await axios(`${API_URL_BASE}/addResponseToUser`, {
       method: "POST",

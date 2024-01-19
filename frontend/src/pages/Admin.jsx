@@ -3,7 +3,7 @@ import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
 import NoAccess from "../components/NoAccess";
 import { Audio } from "react-loader-spinner";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getUserDetailsAPI } from "../Api/UserAPI/UserAPI";
 import QuestionForm from "../components/QuestionForm";
 import Navigation from "../partials/Navigation";
@@ -52,7 +52,7 @@ const Admin = () => {
         <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
           {/*  Site header */}
           <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-          
+
           <Navigation />
 
           {loader ? (

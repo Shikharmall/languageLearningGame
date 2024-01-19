@@ -58,15 +58,34 @@ function ModalSearch({ id, modalOpen, setModalOpen, language }) {
       }
     });
   };
+
+  const [formData, setFormData] = useState({
+    user_id: "",
+    score: "",
+    easyCorrect: "",
+    easyIncorrect: "",
+    moderateCorrect: "",
+    moderateIncorrect: "",
+    hardCorrect: "",
+    hardIncorrect: "",
+    language: "",
+  });
+
   useEffect(() => {
     getQuestionFunc(language, 0);
     localStorage.setItem("score", 0);
+    const user_idd = localStorage.getItem("user_id");
     localStorage.setItem("easyCorrect", 0);
     localStorage.setItem("easyIncorrect", 0);
     localStorage.setItem("moderateCorrect", 0);
     localStorage.setItem("moderateIncorrect", 0);
     localStorage.setItem("hardCorrect", 0);
     localStorage.setItem("hardIncorrect", 0);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      user_id: user_idd,
+      language: language,
+    }));
   }, [language]);
 
   const recall = () => {
@@ -140,31 +159,17 @@ function ModalSearch({ id, modalOpen, setModalOpen, language }) {
     setSelectedOption(event.target.value);
   };
 
-  const [formData, setFormData] = useState({
-    user_id: "",
-    score: "",
-    easyCorrect: "",
-    easyIncorrect: "",
-    moderateCorrect: "",
-    moderateIncorrect: "",
-    hardCorrect: "",
-    hardIncorrect: "",
-    language: "",
-  });
-
   const addResponseToUserFunc = () => {
     setLoader(true);
-    const scoree = localStorage.getItem("score");
-    const user_idd = localStorage.getItem("user_id");
+    let scoree = localStorage.getItem("score");
     let easyCorrect = localStorage.getItem("easyCorrect");
     let easyIncorrect = localStorage.getItem("easyIncorrect");
     let moderateCorrect = localStorage.getItem("moderateCorrect");
     let moderateIncorrect = localStorage.getItem("moderateIncorrect");
     let hardCorrect = localStorage.getItem("hardCorrect");
     let hardIncorrect = localStorage.getItem("hardIncorrect");
-    setFormData({
-      ...formData,
-      user_id: user_idd,
+    setFormData((prevFormData) => ({
+      ...prevFormData,
       score: scoree,
       easyCorrect: easyCorrect,
       easyIncorrect: easyIncorrect,
@@ -172,8 +177,7 @@ function ModalSearch({ id, modalOpen, setModalOpen, language }) {
       moderateIncorrect: moderateIncorrect,
       hardCorrect: hardCorrect,
       hardIncorrect: hardIncorrect,
-      language: language,
-    });
+    }));
     addResponseToUserAPI(formData).then((res) => {
       if (res.status === 201) {
         setLoader(false);
@@ -185,6 +189,8 @@ function ModalSearch({ id, modalOpen, setModalOpen, language }) {
       }
     });
   };
+
+  console.log(formData);
 
   return (
     <>
