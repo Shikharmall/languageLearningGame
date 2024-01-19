@@ -1,4 +1,4 @@
-# Language Learning Game
+# Language Learning Game (Responsive)
 
 ## Frontend-
     Technologies Used - ReactJS, Vite, Tailwind CSS
@@ -27,6 +27,8 @@
       Admin can also play learning game for testing purpose.
 
     Users can register and sign in in this platform.
+
+    As English have more dummy data in all levels (easy , moderate & hard) , so use english for giving exam.
     
     
 
