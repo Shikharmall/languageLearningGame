@@ -1,57 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { NavLink, useParams, useLocation } from "react-router-dom";
-//import { getsociety } from "../Api/SocietyDetailsAPI";
+import React from "react";
+import { NavLink, useLocation } from "react-router-dom";
 
 export default function Navigation() {
-  const { society_id } = useParams();
   const location = useLocation();
   const { pathname } = location;
-
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
-
-  const [isHovered1, setIsHovered1] = useState(false);
-
-  const handleMouseEnter1 = () => {
-    setIsHovered1(true);
-  };
-
-  const handleMouseLeave1 = () => {
-    setIsHovered1(false);
-  };
-
-  const [societyid, setSocietyid] = useState("");
-  const [showsocietydetails, setShowsocietydetails] = useState("");
-
-  const societydetails = (id) => {
-    if (id !== "") {
-      try {
-        getsociety(id).then((res) => {
-          if (res.status === 200) {
-            setShowsocietydetails(res.data.data);
-          } else {
-            console.log("error");
-          }
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
-
-  useEffect(() => {
-    if (society_id) {
-      setSocietyid(society_id);
-      societydetails(society_id);
-    }
-  }, [society_id]);
 
   return (
     <div className="border-b border-gray-200 dark:border-gray-700 bg-white">
@@ -72,7 +24,8 @@ export default function Navigation() {
               //className="w-4 h-4 mr-2 text-gray-400 group-hover:text-gray-500 dark:text-gray-500 dark:group-hover:text-gray-300"
               className={`fill-current ${
                 pathname === "/" ||
-                (pathname.includes("admin") && pathname.includes("allquestions"))
+                (pathname.includes("admin") &&
+                  pathname.includes("allquestions"))
                   ? "w-4 h-4 mr-2 text-blue-600 dark:text-blue-500"
                   : "w-4 h-4 mr-2 text-gray-400 group-hover:text-gray-500 dark:text-gray-500 dark:group-hover:text-gray-300"
               }`}
@@ -101,7 +54,8 @@ export default function Navigation() {
               //className="w-4 h-4 mr-2 text-gray-400 group-hover:text-gray-500 dark:text-gray-500 dark:group-hover:text-gray-300"
               className={`fill-current ${
                 pathname === "/" ||
-                (pathname.includes("admin") && pathname.includes("addquestions"))
+                (pathname.includes("admin") &&
+                  pathname.includes("addquestions"))
                   ? "w-4 h-4 mr-2 text-blue-600 dark:text-blue-500"
                   : "w-4 h-4 mr-2 text-gray-400 group-hover:text-gray-500 dark:text-gray-500 dark:group-hover:text-gray-300"
               }`}

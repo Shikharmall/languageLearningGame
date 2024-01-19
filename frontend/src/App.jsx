@@ -3,8 +3,6 @@ import { Routes, Route, useLocation } from "react-router-dom";
 
 import "./css/style.css";
 
-import "./charts/ChartjsConfig";
-
 // Import pages
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -14,7 +12,7 @@ import PublicUserDetails from "./pages/PublicUserDetails";
 import LanguageGame from "./pages/LanguageGame";
 import NotFound from "./components/NotFound";
 import Admin from "./pages/Admin";
-import Modalpopup from "./components/Modalpopup";
+import Modalpopup from "./components/GameWindow";
 import AllQuestions from "./pages/AllQuestions";
 import EditQuestion from "./pages/EditQuestion";
 

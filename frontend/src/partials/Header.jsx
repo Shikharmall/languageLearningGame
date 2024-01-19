@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import UserMenu from "../components/DropdownProfile";
+import Logout from "../components/Logout";
 import { getUserDetailsAPI } from "../Api/UserAPI/UserAPI";
 
 function Header({ sidebarOpen, setSidebarOpen }) {
@@ -52,7 +52,7 @@ function Header({ sidebarOpen, setSidebarOpen }) {
           <div className="flex items-center space-x-3">
             <p className="text-blue-300">Hi, {data?.name} !</p>
             <hr className="w-px h-12 bg-slate-200 dark:bg-slate-700 border-none" />
-            <UserMenu align="right" />
+            <Logout align="right" />
           </div>
         </div>
       </div>

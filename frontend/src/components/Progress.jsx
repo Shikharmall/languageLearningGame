@@ -193,7 +193,7 @@ function Progress({ data }) {
               <br />
               <div className="w-full">
                 <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-                  french Language Stats
+                  French Language Stats
                 </p>
                 <div className="overflow-hidden h-4 text-xs flex rounded w-full">
                   <div

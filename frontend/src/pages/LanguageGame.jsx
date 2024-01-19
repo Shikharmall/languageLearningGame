@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
-import img1 from "../images/city.png";
-import Loaderimage from "../images/loader.gif";
-import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import Modalpopup from "../components/Modalpopup";
+import Modalpopup from "../components/GameWindow";
 
 const LanguageGame = () => {
   const navigate = useNavigate();
