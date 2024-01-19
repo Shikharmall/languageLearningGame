@@ -6,7 +6,7 @@ import { getQuestionAPI } from "../Api/QuestionAPI/QuestionAPI";
 import { addResponseToUserAPI } from "../Api/ResponseAPI/ResponseAPI";
 
 function ModalSearch({ id, modalOpen, setModalOpen, language }) {
-  const modalContent = useRef(null);
+  /*const modalContent = useRef(null);
   const searchInput = useRef(null);
 
   // close on click outside
@@ -31,7 +31,7 @@ function ModalSearch({ id, modalOpen, setModalOpen, language }) {
 
   useEffect(() => {
     modalOpen && searchInput.current.focus();
-  }, [modalOpen]);
+  }, [modalOpen]);*/
 
   const [questionData, setQuestionData] = useState("");
   const [isAnswered, setIsAnswered] = useState(false);
@@ -70,22 +70,17 @@ function ModalSearch({ id, modalOpen, setModalOpen, language }) {
     hardIncorrect: "",
     language: "",
   });
+  const user_idd = localStorage.getItem("user_id");
 
   useEffect(() => {
     getQuestionFunc(language, 0);
     localStorage.setItem("score", 0);
-    const user_idd = localStorage.getItem("user_id");
     localStorage.setItem("easyCorrect", 0);
     localStorage.setItem("easyIncorrect", 0);
     localStorage.setItem("moderateCorrect", 0);
     localStorage.setItem("moderateIncorrect", 0);
     localStorage.setItem("hardCorrect", 0);
     localStorage.setItem("hardIncorrect", 0);
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      user_id: user_idd,
-      language: language,
-    }));
   }, [language]);
 
   const recall = () => {
@@ -177,17 +172,9 @@ function ModalSearch({ id, modalOpen, setModalOpen, language }) {
       moderateIncorrect: moderateIncorrect,
       hardCorrect: hardCorrect,
       hardIncorrect: hardIncorrect,
+      language: language,
+      user_id: user_idd,
     }));
-    /*addResponseToUserAPI(formData).then((res) => {
-      if (res.status === 201) {
-        setLoader(false);
-        localStorage.setItem("score", 0);
-        setModalOpen(false);
-      } else {
-        console.log("Data Update Failed!");
-        console.log(res);
-      }
-    });*/
 
     setFormData((updatedFormData) => {
       addResponseToUserAPI(updatedFormData).then((res) => {
@@ -234,13 +221,13 @@ function ModalSearch({ id, modalOpen, setModalOpen, language }) {
         leaveEnd="opacity-0 translate-y-4"
       >
         <div
-          ref={modalContent}
+          //ref={modalContent}
           className="bg-white dark:bg-slate-800 border border-transparent dark:border-slate-700 overflow-auto w-full h-full"
         >
           <div
             className="py-4 px-2 w-full h-full"
             id="movetop"
-            ref={searchInput}
+            //ref={searchInput}
           >
             <div className="flex justify-end items-center">
               <button
