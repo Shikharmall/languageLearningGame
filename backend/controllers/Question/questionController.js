@@ -114,22 +114,17 @@ const getQuestion = async (req, res) => {
 const getAllQuestions = async (req, res) => {
   try {
     const { language, level } = req.query;
+    let query = {};
 
-    if (language === "all" && level === "all") {
-      const questionsData = await Question.find();
-      return res.status(200).json({ status: "success", data: questionsData });
-    } else if (language === "all") {
-      const questionsData = await Question.find({ level: level });
-      return res.status(200).json({ status: "success", data: questionsData });
-    } else if (level === "all") {
-      const questionsData = await Question.find({ language: language });
-      return res.status(200).json({ status: "success", data: questionsData });
+    if (language !== "all") {
+      query.language = language;
     }
 
-    const questionsData = await Question.find({
-      language: language,
-      level: level,
-    });
+    if (level !== "all") {
+      query.level = level;
+    }
+
+    const questionsData = await Question.find(query);
 
     return res.status(200).json({ status: "success", data: questionsData });
   } catch (error) {
