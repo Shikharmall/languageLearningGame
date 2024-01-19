@@ -22,7 +22,7 @@
 
 
 ## How to Use-
-    Admin Credential -> email: admin1@gmail.com , password: Admin@123 (As there is no register platform for Admin).
+    Admin Credential -> email: admindd@gmail.com , password: Admin@123 (As there is no register platform for Admin).
       Admin has access of adding question, performing various operation on it.
       Admin can also play learning game for testing purpose.
 
