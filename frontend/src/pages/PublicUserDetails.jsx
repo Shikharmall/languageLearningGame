@@ -25,13 +25,13 @@ const UserDetails = () => {
 
   const { user_id } = useParams();
 
-  const [data, setData] = useState("");
+  const [data, setData] = useState({});
 
   const [rank, setRank] = useState(0);
 
   const [loader, setLoader] = useState(true);
 
-  useEffect(() => {
+  /* useEffect(() => {
     const getUserDetailsFunc = (user_id) => {
       //setLoader(true);
       getUserDetailsAPI(user_id).then((res) => {
@@ -44,32 +44,83 @@ const UserDetails = () => {
       });
     };
     getUserDetailsFunc(user_id);
+  }, [user_id]);*/
+
+  const getUserDetailsFunc = async (userId) => {
+    try {
+      const res = await getUserDetailsAPI(userId);
+      if (res.status === 200) {
+        setData(res?.data?.data);
+      } else {
+        console.error("Data Fetching Failed!");
+      }
+    } catch (error) {
+      console.error("Error fetching user details:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    getUserDetailsFunc(user_id);
+  }, [user_id]);
+
+  console.log(data);
+
+  useEffect(() => {
+    console.log("Effect running...");
+    // Your code
   }, [user_id]);
 
   const [userData, setUserData] = useState([]);
 
+  /*const getAllUsersDetailsFunc = () => {
+    getAllUserDetailsByLanguageAPI("all").then((res) => {
+      if (res.status === 200) {
+        setUserData(res?.data?.data);
+        let rank = 0;
+        userData.forEach(function (obj) {
+          if (obj._id === data._id) {
+            //break;
+            setRank(rank + 1);
+            setLoader(false);
+            return;
+          } else {
+            rank = Number(rank) + 1;
+          }
+        });
+      } else {
+        console.log("Data Fetching Failed!");
+      }
+    });
+  };
+
   useEffect(() => {
-    const getAllUsersDetailsFunc = () => {
-      getAllUserDetailsByLanguageAPI("all").then((res) => {
-        if (res.status === 200) {
-          setUserData(res?.data?.data);
-          let rank = 0;
-          userData.forEach(function (obj) {
-            if (obj._id === data._id) {
-              //break;
-              setRank(rank + 1);
-              setLoader(false);
-              return;
-            } else {
-              rank = Number(rank) + 1;
-            }
-          });
-        } else {
-          console.log("Data Fetching Failed!");
-        }
-      });
-    };
     getAllUsersDetailsFunc();
+  }, [userData, data._id]);*/
+
+  const getAllUsersDetailsFunc = () => {
+    getAllUserDetailsByLanguageAPI("all").then((res) => {
+      if (res.status === 200) {
+        setUserData(res?.data?.data);
+      } else {
+        console.log("Data Fetching Failed!");
+      }
+    });
+  };
+
+  useEffect(() => {
+    getAllUsersDetailsFunc();
+  }, []);
+
+  useEffect(() => {
+    if (userData && data._id) {
+      const foundUser = userData.find((obj) => obj._id === data._id);
+
+      if (foundUser) {
+        const userRank = userData.indexOf(foundUser) + 1;
+        setRank(userRank);
+        setLoader(false);
+      }
+    }
   }, [userData, data._id]);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -142,58 +193,11 @@ const UserDetails = () => {
                   </div>
 
                   <div className="p-2 w-4/6" id="changeflex1">
-                    {/*<div className="relative bg-white rounded-lg shadow dark:bg-gray-700 p-5">
-                      <div className="flex flex-row">
-                        <div className="px-4 sm:px-0">
-                          <h3 className="text-base font-semibold leading-7 text-gray-900">
-                            User Information
-                          </h3>
-                          <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-                            All details
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="mt-6 border-t border-gray-100">
-                        <dl className="divide-y divide-gray-100">
-                          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 text-gray-900">
-                              Name
-                            </dt>
-                            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                              {data?.name}
-                            </dd>
-                          </div>
-                          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 text-gray-900">
-                              Email address
-                            </dt>
-                            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                              {data?.email}
-                            </dd>
-                          </div>
-                          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 text-gray-900">
-                              Total Score
-                            </dt>
-                            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                              {Number(data?.englishScore) +
-                                Number(data?.hindiScore) +
-                                Number(data?.frenchScore)}{" "}
-                              points{" "}
-                              <span className="text-blue-700">
-                                (including all languages)
-                              </span>
-                            </dd>
-                          </div>
-                        </dl>
-                      </div>
-                    </div>*/}
-                    <UserInformation data={data}/>
+                    <UserInformation data={data} />
 
                     <br />
 
-                    <Progress data={data}/>
+                    <Progress data={data} />
                   </div>
                 </div>
               )}

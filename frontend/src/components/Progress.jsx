@@ -87,6 +87,9 @@ function Progress({ data }) {
     setFrenchPercentage(`${ferper}%`);
   }, [englishWidth, hindiWidth, frenchWidth]);
 
+
+  
+
   return (
     <>
       <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
