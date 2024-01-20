@@ -25,70 +25,98 @@ user_route.post("/login", userController.loginUser);
 
 // api for getting user details
 
-user_route.get("/getUserDetails", isLogin , userController.getUserDetails);
+user_route.get("/getUserDetails", isLogin, userController.getUserDetails);
 
 // api for getting all user details
 
-user_route.get("/getAllUserDetails", isLogin , userController.getAllUserDetails);
+user_route.get("/getAllUserDetails", isLogin, userController.getAllUserDetails);
 
 // api for adding question
 
-user_route.post("/addQuestion", isLogin , questionController.addQuestion);
+user_route.post(
+  "/addQuestion",
+  isLogin,
+  isDDAdmin,
+  questionController.addQuestion
+);
 
 // api for getting a question
 
-user_route.get("/getQuestion", isLogin , questionController.getQuestion);
+user_route.get("/getQuestion", isLogin, questionController.getQuestion);
 
 // api for getting all questions
 
-user_route.get("/getAllQuestions", isLogin , questionController.getAllQuestions);
+user_route.get(
+  "/getAllQuestions",
+  isLogin,
+  isDDAdmin,
+  questionController.getAllQuestions
+);
 
 // api for adding user response to database(db)
 
-user_route.post("/addResponseToUser", isLogin , responseController.addResponseToUser);
+user_route.post(
+  "/addResponseToUser",
+  isLogin,
+  responseController.addResponseToUser
+);
 
 // api for getting question by id
 
-user_route.get("/getQuestionByID", isLogin , questionController.getQuestionByID);
+user_route.get(
+  "/getQuestionByID",
+  isLogin,
+  isDDAdmin,
+  questionController.getQuestionByID
+);
 
 // api for getting all user details by language
 
 user_route.get(
-  "/getAllUserDetailsByLanguage",isLogin ,
+  "/getAllUserDetailsByLanguage",
+  isLogin,
   userController.getAllUserDetailsByLanguage
 );
 
 // api for updating question
 
-user_route.patch("/updateQuestion", isLogin ,questionController.updateQuestion);
+user_route.patch(
+  "/updateQuestion",
+  isLogin,
+  isDDAdmin,
+  questionController.updateQuestion
+);
 
 // api for getting user response
 
-user_route.get("/getUserResponse", isLogin , responseController.getUserResponse);
+user_route.get("/getUserResponse", isLogin, responseController.getUserResponse);
 
 // api for getting user english response
 
 user_route.get(
-  "/getUserResponseEnglish",isLogin ,
+  "/getUserResponseEnglish",
+  isLogin,
   responseController.getUserResponseEnglish
 );
 
 // api for getting user hindi response
 
 user_route.get(
-  "/getUserResponseHindi",isLogin ,
+  "/getUserResponseHindi",
+  isLogin,
   responseController.getUserResponseHindi
 );
 
 // api for getting user french response
 
 user_route.get(
-  "/getUserResponseFrench",isLogin ,
+  "/getUserResponseFrench",
+  isLogin,
   responseController.getUserResponseFrench
 );
 
 // api for resetting progress
 
-user_route.patch("/resetProgress", isLogin , responseController.resetProgress);
+user_route.patch("/resetProgress", isLogin, responseController.resetProgress);
 
 module.exports = user_route;
