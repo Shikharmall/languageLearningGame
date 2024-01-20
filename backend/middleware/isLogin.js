@@ -3,11 +3,12 @@ const verifyToken = require("../utils/verifyToken");
 const User = require("../models/User/userModel");
 
 const isLogin = async (req, res, next) => {
-	const token = getTokenFromCookie(req);
+  const token = getTokenFromCookie(req);
 
-	const decodedUser = verifyToken(token);
+  const decodedUser = verifyToken(token);
+  //console.log(decodedUser);
 
-	/*if (!decodedUser) {
+  /*if (!decodedUser) {
         return res.status(401).json({ error: "Invalid/Expired Token, Please Login Again" });
 	}
 
@@ -17,7 +18,7 @@ const isLogin = async (req, res, next) => {
         return res.status(401).json({ error: "User does not exist, Please Login Again" });
 	}*/
 
-	next();
+  next();
 };
 
 module.exports = isLogin;

@@ -91,10 +91,9 @@ const loginUser = async (req, res) => {
         .status(404)
         .json({ status: "failed", message: "Password Not Matched" });
     }
-    
-    
+
     const tokenAge = 259200; // 3 days = 259200 seconds
-		const token = generateToken(userData._id, tokenAge);
+    const token = generateToken(userData._id, tokenAge);
 
     return res
       .status(200)
@@ -102,9 +101,12 @@ const loginUser = async (req, res) => {
         httpOnly: true,
         secure: true,
         sameSite: "none",
-        maxAge: tokenAge * 1000, // 3 days
+        //maxAge: tokenAge * 1000, // 3 days
       })
-      .json({ status: "success", data: { user_id: userData._id } });
+      .json({
+        status: "success",
+        data: { user_id: userData._id, token: token },
+      });
   } catch (error) {
     res.status(500).json({ status: "failed", message: error.message });
   }
@@ -184,10 +186,20 @@ const getAllUserDetailsByLanguage = async (req, res) => {
   }
 };
 
+// Logout
+const logout = async (req, res) => {
+
+	return res.clearCookie("access_token").status(200).json({
+		status: "success",
+		msg: "Successfully logged out."
+	});
+};
+
 module.exports = {
   registerUser,
   loginUser,
   getUserDetails,
   getAllUserDetails,
   getAllUserDetailsByLanguage,
+  logout
 };

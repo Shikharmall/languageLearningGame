@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { userLogoutAPI } from "../Api/UserAPI/UserAPI";
 function DropdownProfile() {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -10,6 +11,16 @@ function DropdownProfile() {
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  const logoutFunc = () => {
+    userLogoutAPI().then((res) => {
+      if (res.status === 200) {
+        navigate("/");
+      } else {
+        console.log("Data Fetching Failed!");
+      }
+    });
   };
 
   return (
@@ -82,8 +93,7 @@ function DropdownProfile() {
                       localStorage.removeItem("moderateIncorrect");
                       localStorage.removeItem("hardCorrect");
                       localStorage.removeItem("hardIncorrect");
-                      
-                      navigate("/");
+                      logoutFunc();
                     }}
                   >
                     Logout

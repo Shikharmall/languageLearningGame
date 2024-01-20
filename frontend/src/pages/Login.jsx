@@ -35,7 +35,6 @@ export default function Login() {
     userLoginAPI(formData).then((res) => {
       if (res.status === 200) {
         localStorage.setItem("user_id", res?.data?.data?.user_id);
-        console.log(res?.data?.data);
         navigate("/leaderboard");
         localStorage.setItem("isLogin", true);
       } else {

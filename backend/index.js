@@ -22,6 +22,9 @@ if (process.env.DATABASE === "MONGODBATLAS") {
 }
 
 app.use(cookieParser());
+
+app.use(express.json()); 
+
 const cors = require("cors");
 
 let allowedOrigins = [

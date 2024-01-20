@@ -119,4 +119,8 @@ user_route.get(
 
 user_route.patch("/resetProgress", isLogin, responseController.resetProgress);
 
+// api for logout
+
+user_route.post("/logout", isLogin, userController.logout);
+
 module.exports = user_route;

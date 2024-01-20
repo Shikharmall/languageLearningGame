@@ -14,6 +14,25 @@ export const userLoginAPI = async (data) => {
 
       data: data,
     });
+    
+    return result;
+  } catch (error) {
+    return error;
+  }
+};
+
+// API for user logout
+
+export const userLogoutAPI = async (data) => {
+  try {
+    let result = await axios(`${API_URL_BASE}/logout`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        //mode: "no-cors",
+      },
+    });
+    
     return result;
   } catch (error) {
     return error;
@@ -42,11 +61,15 @@ export const userRegisterAPI = async (data) => {
 
 export const getUserDetailsAPI = async (user_id) => {
   try {
-    let result = await axios(`${API_URL_BASE}/getUserDetails?user_id=${user_id}`, {
-      method: "GET",
-      withCredentials: true,
-    });
+    let result = await axios(
+      `${API_URL_BASE}/getUserDetails?user_id=${user_id}`,
+      {
+        method: "GET",
+        withCredentials: true,
+      }
+    );
     return result;
+
   } catch (error) {
     return error;
   }
@@ -70,13 +93,15 @@ export const getAllUsersDetailsAPI = async () => {
 
 export const getAllUserDetailsByLanguageAPI = async (language) => {
   try {
-    let result = await axios(`${API_URL_BASE}/getAllUserDetailsByLanguage?language=${language}`, {
-      method: "GET",
-      withCredentials: true,
-    });
+    let result = await axios(
+      `${API_URL_BASE}/getAllUserDetailsByLanguage?language=${language}`,
+      {
+        method: "GET",
+        withCredentials: true,
+      }
+    );
     return result;
   } catch (error) {
     return error;
   }
 };
-
