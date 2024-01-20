@@ -11,10 +11,10 @@ export const userLoginAPI = async (data) => {
         "Content-Type": "application/json",
         mode: "no-cors",
       },
-
+      withCredentials: true,
       data: data,
     });
-    
+
     return result;
   } catch (error) {
     return error;
@@ -31,8 +31,9 @@ export const userLogoutAPI = async (data) => {
         "Content-Type": "application/json",
         //mode: "no-cors",
       },
+      withCredentials: true,
     });
-    
+
     return result;
   } catch (error) {
     return error;
@@ -49,6 +50,7 @@ export const userRegisterAPI = async (data) => {
         "Content-Type": "application/json",
         mode: "no-cors",
       },
+      withCredentials: true,
       data: data,
     });
     return result;
@@ -69,7 +71,6 @@ export const getUserDetailsAPI = async (user_id) => {
       }
     );
     return result;
-
   } catch (error) {
     return error;
   }

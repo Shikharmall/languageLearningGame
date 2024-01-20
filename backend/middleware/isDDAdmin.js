@@ -1,7 +1,6 @@
 const getTokenFromCookie = require("../utils/getTokenFromCookie");
 const verifyToken = require("../utils/verifyToken");
 const User = require("../models/User/userModel");
-const isLogin = require("./isLogin");
 
 const isDDAdmin = async (req, res, next) => {
   try {
@@ -9,7 +8,7 @@ const isDDAdmin = async (req, res, next) => {
 
     const decodedUser = verifyToken(token);
 
-    /*if (!decodedUser) {
+    if (!decodedUser) {
       return res
         .status(401)
         .json({ error: "Invalid/Expired Token, Please Login Again" });
@@ -27,9 +26,8 @@ const isDDAdmin = async (req, res, next) => {
       return res
         .status(403)
         .json({ error: "Access denied. User is not an admin." });
-    }*/
+    }
 
-    // If the user is found and is an admin, continue to the next middleware or route handler
     next();
   } catch (error) {
     // Handle any unexpected errors
