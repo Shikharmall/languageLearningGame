@@ -11,6 +11,7 @@ export const addQuestionAPI = async (data) => {
       headers: {
         "Content-Type": "application/json",
       },
+      withCredentials: true,
       data: data,
     });
     return result;
@@ -81,6 +82,7 @@ export const updateQuestionAPI = async (question_id, data) => {
         headers: {
           "Content-Type": "application/json",
         },
+        withCredentials: true,
         data: data,
       }
     );

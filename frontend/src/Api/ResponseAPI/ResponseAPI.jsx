@@ -11,6 +11,7 @@ export const addResponseToUserAPI = async (data) => {
       headers: {
         "Content-Type": "application/json",
       },
+      withCredentials: true,
       data: data,
     });
     return result;
@@ -27,6 +28,7 @@ export const getUserResponseAPI = async (user_id) => {
       `${API_URL_BASE}/getUserResponse?user_id=${user_id}`,
       {
         method: "GET",
+        withCredentials: true,
         headers: {
           //"Content-Type": "application/json",
         },
@@ -45,7 +47,8 @@ export const getUserResponseEnglishAPI = async (user_id) => {
     let result = await axios(
       `${API_URL_BASE}/getUserResponseEnglish?user_id=${user_id}`,
       {
-        method: "GET"
+        method: "GET",
+        withCredentials: true,
       }
     );
     return result;
@@ -65,6 +68,7 @@ export const getUserResponseHindiAPI = async (user_id) => {
         headers: {
           //"Content-Type": "application/json",
         },
+        withCredentials: true,
       }
     );
     return result;
@@ -84,6 +88,7 @@ export const getUserResponseFrenchAPI = async (user_id) => {
         headers: {
           //"Content-Type": "application/json",
         },
+        withCredentials: true,
       }
     );
     return result;
@@ -103,6 +108,7 @@ export const resetProgressAPI = async (user_id) => {
         headers: {
           //"Content-Type": "application/json",
         },
+        withCredentials: true,
       }
     );
     return result;

@@ -2,6 +2,8 @@ const User = require("../../models/User/userModel");
 
 const { validationResult } = require("express-validator");
 
+const generateToken = require("../../utils/generateToken");
+
 const bcrypt = require("bcrypt");
 
 //bcrypting the password
@@ -89,9 +91,19 @@ const loginUser = async (req, res) => {
         .status(404)
         .json({ status: "failed", message: "Password Not Matched" });
     }
+    
+    
+    const tokenAge = 259200; // 3 days = 259200 seconds
+		const token = generateToken(userData._id, tokenAge);
 
     return res
       .status(200)
+      .cookie("access_token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+        maxAge: tokenAge * 1000, // 3 days
+      })
       .json({ status: "success", data: { user_id: userData._id } });
   } catch (error) {
     res.status(500).json({ status: "failed", message: error.message });
@@ -154,14 +166,16 @@ const getAllUserDetailsByLanguage = async (req, res) => {
     const userData = await User.aggregate([
       {
         $addFields: {
-          totalScore: { $add: ["$englishScore", "$hindiScore", "$frenchScore"] }
-        }
+          totalScore: {
+            $add: ["$englishScore", "$hindiScore", "$frenchScore"],
+          },
+        },
       },
       {
         $sort: {
-          totalScore: -1 // Sort in descending order based on totalScore
-        }
-      }
+          totalScore: -1, // Sort in descending order based on totalScore
+        },
+      },
     ]);
 
     return res.status(200).json({ status: "success", data: userData });

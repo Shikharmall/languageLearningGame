@@ -1,4 +1,6 @@
 var express = require("express");
+
+const cookieParser = require("cookie-parser");
 var app = express();
 
 require("dotenv").config();
@@ -19,6 +21,7 @@ if (process.env.DATABASE === "MONGODBATLAS") {
   console.log("No proper ENV.");
 }
 
+app.use(cookieParser());
 const cors = require("cors");
 
 let allowedOrigins = [
