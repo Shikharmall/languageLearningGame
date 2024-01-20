@@ -17,7 +17,7 @@
     Setup Process-
       1.cd backend
       2.npm install
-      3.set environment variables(DATABASE = "MONGODBATLAS" , DATABASEURL = "ask-me-as-it-is-confidential")
+      3.set environment variables(DATABASE = "MONGODBATLAS" , DATABASEURL = "ask-me-as-it-is-confidential" , CONFIG_SECRET_KEY = "ask-me-as-it-is-confidential")
       4.nodemon index.js
 
 
