@@ -160,6 +160,12 @@ function ModalSearch({ id, modalOpen, setModalOpen, language }) {
         if (res.status === 201) {
           setLoader(false);
           localStorage.setItem("score", 0);
+          localStorage.setItem("easyCorrect", "0");
+          localStorage.setItem("easyIncorrect", "0");
+          localStorage.setItem("moderateCorrect", "0");
+          localStorage.setItem("moderateIncorrect", "0");
+          localStorage.setItem("hardCorrect", "0");
+          localStorage.setItem("hardIncorrect", "0");
           setModalOpen(false);
         } else {
           console.log("Data Update Failed!");

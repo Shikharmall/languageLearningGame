@@ -76,6 +76,13 @@ function DropdownProfile() {
                       localStorage.removeItem("isLogin");
                       localStorage.removeItem("user_id");
                       localStorage.removeItem("score");
+                      localStorage.removeItem("easyCorrect");
+                      localStorage.removeItem("easyIncorrect");
+                      localStorage.removeItem("moderateCorrect");
+                      localStorage.removeItem("moderateIncorrect");
+                      localStorage.removeItem("hardCorrect");
+                      localStorage.removeItem("hardIncorrect");
+                      
                       navigate("/");
                     }}
                   >
