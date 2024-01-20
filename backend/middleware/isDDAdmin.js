@@ -22,7 +22,7 @@ const isDDAdmin = async (req, res, next) => {
         .json({ error: "User does not exist, Please Login Again" });
     }
 
-    if (!userFound.isAdmin) {
+    if (!userData.isAdmin) {
       return res
         .status(403)
         .json({ error: "Access denied. User is not an admin." });
