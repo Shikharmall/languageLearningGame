@@ -39,6 +39,7 @@ export default function Login() {
         navigate("/leaderboard");
         localStorage.setItem("isLogin", true);
       } else {
+        setLoader(false);
         toast(res?.response?.data?.message);
       }
     });
