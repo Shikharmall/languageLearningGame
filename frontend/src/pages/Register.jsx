@@ -40,6 +40,7 @@ export default function Register() {
         setLoader(false);
         navigate("/");
       } else {
+        setLoader(false);
         if (res?.response?.status === 400) {
           res?.response?.data?.errors?.map((value, index) => toast(value.msg));
         } else {
