@@ -4,14 +4,19 @@ import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../images/logo.png";
 import { userLoginAPI } from "../Api/UserAPI/UserAPI";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoginAction } from "../redux/userLogin/actions";
 
 export default function Login() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const isLogin = localStorage.getItem("isLogin");
+    const isLogin1 = localStorage.getItem("isLogin");
 
-    if (isLogin) {
+    //const isLogin = useSelector((state)=>state.auth.isLogin);
+    //console.log(isLogin);
+
+    if (isLogin1) {
       navigate("/leaderboard");
     }
   }, []);
@@ -38,12 +43,15 @@ export default function Login() {
         localStorage.setItem("user_id", res?.data?.data?.user_id);
         navigate("/leaderboard");
         localStorage.setItem("isLogin", true);
+        useDispatch(setLoginAction());
       } else {
         setLoader(false);
         toast(res?.response?.data?.message);
       }
     });
   };
+
+  
 
   return (
     <>
