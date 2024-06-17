@@ -12,16 +12,24 @@ import {
 } from "../Api/UserAPI/UserAPI";
 import Progress from "../components/Progress";
 import UserInformation from "../components/UserInformation";
+import { useSelector } from "react-redux";
 
 const UserDetails = () => {
   const navigate = useNavigate();
-  useEffect(() => {
-    const isLogin = localStorage.getItem("isLogin");
+  //useEffect(() => {
+  //  const isLogin = localStorage.getItem("isLogin");
+  //  if (!isLogin) {
+  //    navigate("/");
+  //  }
+  //}, []);
 
+  const isLogin = useSelector((state) => state.auth.isLogin);
+
+  useEffect(() => {
     if (!isLogin) {
       navigate("/");
     }
-  }, []);
+  }, [isLogin]);
 
   const { user_id } = useParams();
 

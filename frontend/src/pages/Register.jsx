@@ -4,17 +4,25 @@ import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../images/logo.png";
 import { userRegisterAPI } from "../Api/UserAPI/UserAPI";
+import { useSelector } from "react-redux";
 
 export default function Register() {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const isLogin = localStorage.getItem("isLogin");
+  //useEffect(() => {
+  //  const isLogin = localStorage.getItem("isLogin");
+  //  if (isLogin) {
+  //    navigate("/leaderboard");
+  //  }
+  //}, []);
 
+  const isLogin = useSelector((state) => state.auth.isLogin);
+
+  useEffect(() => {
     if (isLogin) {
       navigate("/leaderboard");
     }
-  }, []);
+  }, [isLogin]);
 
   const [formData, setFormData] = useState({
     name: "",

@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { userLogoutAPI } from "../Api/UserAPI/UserAPI";
+import { useDispatch } from "react-redux";
+import { setLogoutAction } from "../redux/userLogin/actions";
 function DropdownProfile() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -17,6 +20,7 @@ function DropdownProfile() {
     userLogoutAPI().then((res) => {
       if (res.status === 200) {
         navigate("/");
+        dispatch(setLogoutAction());
       } else {
         console.log("Data Fetching Failed!");
       }

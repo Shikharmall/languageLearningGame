@@ -9,17 +9,14 @@ import { setLoginAction } from "../redux/userLogin/actions";
 
 export default function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    const isLogin1 = localStorage.getItem("isLogin");
-
-    //const isLogin = useSelector((state)=>state.auth.isLogin);
-    //console.log(isLogin);
-
-    if (isLogin1) {
-      navigate("/leaderboard");
-    }
-  }, []);
+  //useEffect(() => {
+  //const isLogin1 = localStorage.getItem("isLogin");
+  //if (isLogin1) {
+  //  navigate("/leaderboard");
+  //}
+  //}, []);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -42,8 +39,8 @@ export default function Login() {
         setLoader(false);
         localStorage.setItem("user_id", res?.data?.data?.user_id);
         navigate("/leaderboard");
-        localStorage.setItem("isLogin", true);
-        useDispatch(setLoginAction());
+        //localStorage.setItem("isLogin", true);
+        dispatch(setLoginAction());
       } else {
         setLoader(false);
         toast(res?.response?.data?.message);
@@ -51,7 +48,13 @@ export default function Login() {
     });
   };
 
-  
+  const isLogin = useSelector((state) => state.auth.isLogin);
+
+  useEffect(() => {
+    if (isLogin) {
+      navigate("/leaderboard");
+    }
+  }, [isLogin]);
 
   return (
     <>

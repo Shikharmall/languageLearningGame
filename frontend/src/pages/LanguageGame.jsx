@@ -3,17 +3,25 @@ import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
 import { useNavigate } from "react-router-dom";
 import Modalpopup from "../components/GameWindow";
+import { useSelector } from "react-redux";
 
 const LanguageGame = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const isLogin = localStorage.getItem("isLogin");
+  //useEffect(() => {
+  //  const isLogin = localStorage.getItem("isLogin");
+  //  if (!isLogin) {
+  //    navigate("/");
+  //  }
+  //}, []);
 
+  const isLogin = useSelector((state) => state.auth.isLogin);
+
+  useEffect(() => {
     if (!isLogin) {
       navigate("/");
     }
-  }, []);
+  }, [isLogin]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(10);
@@ -56,7 +64,6 @@ const LanguageGame = () => {
             className="relative sm:rounded-lg p-3 w-full h-full"
             id="movetop"
           >
-
             <div className="flex flex-wrap items-center justify-between py-4 px-4 bg-white w-full h-full rounded-md">
               <div className="container px-5 py-24 mx-auto">
                 <div className="lg:w-4/5 mx-auto flex items-center justify-center">
@@ -71,7 +78,7 @@ const LanguageGame = () => {
                     <p className="leading-relaxed">
                       1. You will be given 60 seconds(i.e. 1 min). <br />
                       2. You have to attempt maximum number of questions. <br />
-                      3. You will have three level of question i.e. easy(of 
+                      3. You will have three level of question i.e. easy(of
                       points), medium(of 3 points) & hard(of 5 points). <br />
                       4. Based on your score, you will be assign global rank.
                     </p>
@@ -86,9 +93,7 @@ const LanguageGame = () => {
                         onChange={(e) => handleLanguageChange(e)}
                         value={language}
                       >
-                        <option disabled>
-                          Select Language
-                        </option>
+                        <option disabled>Select Language</option>
                         <option value="english">English</option>
                         <option value="hindi">Hindi</option>
                         <option value="french">French</option>

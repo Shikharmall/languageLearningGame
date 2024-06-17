@@ -7,16 +7,24 @@ import { useNavigate } from "react-router-dom";
 import { getUserDetailsAPI } from "../Api/UserAPI/UserAPI";
 import QuestionForm from "../components/QuestionForm";
 import Navigation from "../partials/Navigation";
+import { useSelector } from "react-redux";
 
 const Admin = () => {
   const navigate = useNavigate();
-  useEffect(() => {
-    const isLogin = localStorage.getItem("isLogin");
+  //useEffect(() => {
+  //  const isLogin = localStorage.getItem("isLogin");
+  //  if (!isLogin) {
+  //    navigate("/");
+  //  }
+  //}, []);
 
+  const isLogin = useSelector((state) => state.auth.isLogin);
+
+  useEffect(() => {
     if (!isLogin) {
       navigate("/");
     }
-  }, []);
+  }, [isLogin]);
 
   const user_id = localStorage.getItem("user_id");
 

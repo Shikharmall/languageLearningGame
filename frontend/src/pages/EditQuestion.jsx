@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import img1 from "../images/user.png";
 import { Audio } from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
-import { NavLink, useParams, Link } from "react-router-dom";
+import { NavLink, useParams, Link, useNavigate } from "react-router-dom";
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
 import Navigation from "../partials/Navigation";
@@ -10,12 +10,21 @@ import {
   getQuestionByIDAPI,
   updateQuestionAPI,
 } from "../Api/QuestionAPI/QuestionAPI";
+import { useSelector } from "react-redux";
 
 const EditQuestion = () => {
   const [loader, setLoader] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { question_id } = useParams();
   const [loader1, setLoader1] = useState(false);
+  const navigate = useNavigate();
+  const isLogin = useSelector((state) => state.auth.isLogin);
+
+  useEffect(() => {
+    if (!isLogin) {
+      navigate("/");
+    }
+  }, [isLogin]);
 
   const [formData, setFormData] = useState({
     question: "",

@@ -1,4 +1,4 @@
-import { setLogin, setLogout } from "./type";
+import { SET_LOGIN, SET_LOGOUT } from "./type";
 
 const initialState = {
   isLogin: false,
@@ -6,12 +6,12 @@ const initialState = {
 
 const setAuthReducer = (state = initialState, action) => {
   switch (action.type) {
-    case setLogin:
+    case SET_LOGIN:
       return {
         ...state,
         isLogin: true,
       };
-    case setLogout:
+    case SET_LOGOUT:
       return {
         ...state,
         isLogin: false,

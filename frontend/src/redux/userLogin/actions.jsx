@@ -1,14 +1,13 @@
-import { setLogin, setLogout } from "./type";
+import { SET_LOGIN, SET_LOGOUT } from "./type";
 
-export const setLoginAction = (/*id,name*/) => {
+export const setLoginAction = () => {
   return {
-    type: setLogin,
-    //payload : {id: id , name: name}
+    type: SET_LOGIN,
   };
 };
 
 export const setLogoutAction = () => {
   return {
-    type: setLogout,
+    type: SET_LOGOUT,
   };
 };

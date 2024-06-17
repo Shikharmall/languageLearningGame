@@ -13,16 +13,25 @@ import "../css/default.css";
 import UserInformation from "../components/UserInformation";
 import Progress from "../components/Progress";
 import { resetProgressAPI } from "../Api/ResponseAPI/ResponseAPI";
+import { useSelector } from "react-redux";
 
 const UserDetails = () => {
   const navigate = useNavigate();
-  useEffect(() => {
-    const isLogin = localStorage.getItem("isLogin");
 
+  const isLogin = useSelector((state) => state.auth.isLogin);
+
+  useEffect(() => {
     if (!isLogin) {
       navigate("/");
     }
-  }, []);
+  }, [isLogin]);
+
+  //useEffect(() => {
+  //  const isLogin = localStorage.getItem("isLogin");
+  //  if (!isLogin) {
+  //    navigate("/");
+  //  }
+  //}, []);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const user_id = localStorage.getItem("user_id");

@@ -1,17 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { Audio } from "react-loader-spinner";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
 import Navigation from "../partials/Navigation";
 import { getAllQuestionsAPI } from "../Api/QuestionAPI/QuestionAPI";
 import NoAccess from "../components/NoAccess";
 import { getUserDetailsAPI } from "../Api/UserAPI/UserAPI";
+import { useSelector } from "react-redux";
 
 const AllQuestions = () => {
   const user_id = localStorage.getItem("user_id");
   const [data, setData] = useState("");
   const [loader, setLoader] = useState(true);
+  const navigate = useNavigate();
+  const isLogin = useSelector((state) => state.auth.isLogin);
+
+  useEffect(() => {
+    if (!isLogin) {
+      navigate("/");
+    }
+  }, [isLogin]);
 
   useEffect(() => {
     const getUserDetailsFunc = (user_id) => {
