@@ -26,21 +26,22 @@ const LanguageGame = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(10);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [search, setSearch] = useState("");
+  // const [search, setSearch] = useState("");
 
   const [searchModalOpen, setSearchModalOpen] = useState(false);
   const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  // const indexOfFirstPost = indexOfLastPost - postsPerPage;
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  const filterhoadata = (e) => {
-    setSearch(e.target.value);
-    paginate(1);
-  };
+  // const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const handleSelectChangerow = (e) => {
-    setPostsPerPage(e.target.value);
-  };
+  // const filterhoadata = (e) => {
+  //   setSearch(e.target.value);
+  //   paginate(1);
+  // };
+
+  // const handleSelectChangerow = (e) => {
+  //   setPostsPerPage(e.target.value);
+  // };
 
   const [language, setLanguage] = useState("english"); // State to store the selected category
 
