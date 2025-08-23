@@ -6,7 +6,7 @@ import { getQuestionAPI } from "../Api/QuestionAPI/QuestionAPI";
 import { addResponseToUserAPI } from "../Api/ResponseAPI/ResponseAPI";
 
 function ModalSearch({ id, modalOpen, setModalOpen, language }) {
-  const [questionData, setQuestionData] = useState("");
+  const [questionData, setQuestionData] = useState([]);
   const [isAnswered, setIsAnswered] = useState(false);
   const [loader, setLoader] = useState(true);
   const [questionPoint, setQuestionPoint] = useState(0);
@@ -248,11 +248,11 @@ function ModalSearch({ id, modalOpen, setModalOpen, language }) {
                   <div className="mx-auto flex items-center justify-center">
                     <div className="w-full">
                       <h1 className="text-gray-800 text-3xl title-font font-medium mb-1">
-                        {questionData.question}
+                        {questionData?.question}
                       </h1>
                       <br />
                       <h2 className="text-sm title-font text-gray-500 tracking-widest">
-                        Level- {questionData.level}
+                        Level- {questionData?.level}
                       </h2>
                       <br />
 
